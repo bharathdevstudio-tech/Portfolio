@@ -24,7 +24,7 @@ export const profile = {
   phone: '75300 17192',
   phoneHref: 'tel:+917530017192',
   
-  resumeUrl: '/resume.pdf', // Drop your resume at public/resume.pdf (or paste a full URL here).
+  resumeUrl: '/Bharath-E-Resume.pdf', // Resume PDF in /public (or paste a full URL here).
   socials: {
     github: 'https://github.com/bharathdevstudio-tech',
     linkedin: 'https://www.linkedin.com/in/bharath-soft',
@@ -40,15 +40,4 @@ export const navLinks = [
   { id: 'certificates', label: 'Certificates' },
   { id: 'career', label: 'Career' },
   { id: 'contact', label: 'Contact' },
-]
-
-export const focusAreas = [
-  'React',
-  'TypeScript',
-  'Vite',
-  'Node.js APIs',
-  'E-commerce',
-  'Responsive UI',
-  'Full-Stack',
-  'Vanilla JS',
 ]

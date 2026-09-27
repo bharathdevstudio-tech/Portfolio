@@ -85,14 +85,14 @@ const TypeWriter = ({ words, isReducedMotion = false }) => {
 };
 
 const downloadResume = () => {
-  if (!profile.resume) {
+  const resumeUrl = profile.resumeUrl;
+  if (!resumeUrl) {
     return;
   }
 
   const resumeLink = document.createElement('a');
-  const resumeFileName = profile.resume.split('/').pop() || 'Bharath-E-Resume.pdf';
-  resumeLink.href = profile.resume;
-  resumeLink.download = resumeFileName;
+  resumeLink.href = resumeUrl;
+  resumeLink.download = resumeUrl.split('/').pop() || 'Bharath-E-Resume.pdf';
   document.body.appendChild(resumeLink);
   resumeLink.click();
   resumeLink.remove();
@@ -111,7 +111,7 @@ function Hero() {
   };
 
   return (
-    <section className="hero" aria-label="Hero">
+    <section id="home" className="hero" aria-label="Hero">
       <HeroBackdrop />
       <div className="hero-inner">
         <Reveal className="hero-copy" delay={100}>

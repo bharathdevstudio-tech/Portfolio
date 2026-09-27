@@ -9,6 +9,7 @@ import { projects, projectFilters } from '../data/projects'
 
 export default function Projects() {
   const [filter, setFilter] = useState('All')
+  const [failedShots, setFailedShots] = useState({})
   const shown = useMemo(
     () => (filter === 'All' ? projects : projects.filter((p) => p.tags.includes(filter))),
     [filter]
@@ -43,13 +44,26 @@ export default function Projects() {
         {shown.map((project, i) => (
           <Reveal key={project.id} delay={(i % 3) * 90} className="project-card">
             <TiltCard>
-              <div
-                className="project-thumb"
-                style={{ background: project.placeholder.gradient }}
-                role="img"
-                aria-label={`${project.title} — project preview`}
-              >
-                <TechIcon name={project.placeholder.icon} label="Preview" size="3.2rem" />
+              <div className="project-thumb" style={{ background: project.placeholder.gradient }}>
+                {project.screenshot && !failedShots[project.id] ? (
+                  <img
+                    className="project-thumb-img"
+                    src={project.screenshot}
+                    alt={`${project.title} — live site preview`}
+                    loading="lazy"
+                    decoding="async"
+                    referrerPolicy="no-referrer"
+                    onError={() => setFailedShots((prev) => ({ ...prev, [project.id]: true }))}
+                  />
+                ) : (
+                  <span
+                    className="project-thumb-fallback"
+                    role="img"
+                    aria-label={`${project.title} — project preview`}
+                  >
+                    <TechIcon name={project.placeholder.icon} label="Preview" size="2.4rem" />
+                  </span>
+                )}
               </div>
 
               <div className="project-body">

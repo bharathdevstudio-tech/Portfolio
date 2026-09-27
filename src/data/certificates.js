@@ -1,5 +1,11 @@
 // Certificates data — edit here to update the Certificates section.
 // pdfUrl points to a local file in /public/certificates (or any hosted link).
+// The preview image is the same PDF rendered to PNG (page 1).
+
+const withPreview = (cert) => ({
+  ...cert,
+  image: cert.pdfUrl ? cert.pdfUrl.replace(/\.pdf$/, '.png') : null,
+})
 
 export const certificates = [
   {
@@ -47,4 +53,4 @@ export const certificates = [
     pdfUrl: '',
     placeholderPalette: ['#34d399', '#0ea5e9'],
   },
-]
+].map(withPreview)
