@@ -82,7 +82,7 @@ export default function Navbar() {
             <span className="nav-logo-mark" aria-hidden="true">
               {initial}
             </span>
-            {profile.firstName}
+            {profile.name}
           </a>
 
           <ul className="nav-links">

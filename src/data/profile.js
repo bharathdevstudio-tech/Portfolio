@@ -28,6 +28,10 @@ export const profile = {
   socials: {
     github: 'https://github.com/bharathdevstudio-tech',
     linkedin: 'https://www.linkedin.com/in/bharath-soft',
+    whatsapp: 'https://wa.me/917530017192',
+    instagram: 'https://instagram.com/bharathdevstudio',
+    youtube: 'https://youtube.com/@bharathdevstudio',
+    x: 'https://x.com/bharathdevstudio',
     mail: 'mailto:bharath.devstudio@gmail.com',
   },
 }

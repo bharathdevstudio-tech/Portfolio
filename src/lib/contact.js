@@ -17,9 +17,9 @@ export function isContactConfigured() {
   )
 }
 
-export async function sendContactMessage({ name, email, message }) {
+export async function sendContactMessage({ name, email, phone, subject, message }) {
   const env = import.meta.env ?? {}
-  const payload = { name, email, message }
+  const payload = { name, email, phone: phone || '', subject: subject || '', message }
 
   // 1) Formspree — plain JSON POST.
   if (env.VITE_FORMSPREE_ENDPOINT) {

@@ -1,34 +1,60 @@
-// Experience (Career Path) + Education data — edit here.
+// Career section data — edit here.
 
-export const experience = [
+export const careerProfile = {
+  monogram: 'B',
+  name: 'Bharath E',
+  title: 'Software Developer',
+  description: 'Business applications, responsive websites & web development.',
+  skills: ['VB.NET', 'SQL Server', 'React.js', 'Node.js'],
+  linkedinLabel: 'View LinkedIn',
+  linkedinUrl: 'https://www.linkedin.com/in/bharath-soft',
+}
+
+export const careerHeading = {
+  titleLead: 'My Career',
+  titleAccent: 'Journey',
+  subtitle: 'Building practical software. Learning through experience.',
+}
+
+export const careerTimeline = [
   {
-    id: 1,
-    role: 'Software Developer',
-    company: 'TechNest Solutions',
-    period: '2023 \u2013 Present',
+    id: 'crackyyy',
+    role: 'Software Developer (Freelancing)',
+    company: 'CRACKYYY.TECH',
+    date: 'Sep 2026 – Present',
+    type: 'Full-time · Remote',
+    desc: 'Develop responsive business websites and web applications.',
+    skills: ['React.js', 'JavaScript', 'Node.js'],
+    icon: 'code',
     current: true,
-    desc: 'Building business applications with PHP, MySQL, React.js, VB.NET and SQL Server \u2014 from internship into a full software development role.',
   },
   {
-    id: 2,
-    role: 'Python Developer Intern',
-    company: 'TechNest',
-    period: '2023 \u2013 2024',
-    current: false,
-    desc: 'Completed five Python projects covering file analysis, API weather visualization, automated PDF reporting, an NLTK chatbot and spam classification.',
+    id: 'vistawin',
+    role: 'Application Developer',
+    company: 'VISTAWIN SOLUTION',
+    date: 'Feb 2026 – Present',
+    type: 'Full-time · Tenkasi · On-site',
+    desc: 'Develop and maintain business applications using VB.NET, WinForms and SQL Server. Design database tables, stored procedures, views and functions.',
+    skills: ['VB.NET', 'WinForms', 'SQL Server'],
+    icon: 'building',
+    current: true,
   },
   {
-    id: 3,
-    role: 'Full-Stack Engineer',
-    company: 'Freelance',
-    period: '2022 \u2013 2023',
-    current: false,
-    desc: 'Designed and shipped end-to-end web apps for local businesses \u2014 inventories, bookings, dashboards and storefronts. From first commit to deployment and beyond.',
+    id: 'saiket',
+    role: 'Software Engineer Intern',
+    company: 'SaiKet Systems',
+    date: 'Jun 2026 – Jul 2026',
+    desc: 'Worked on application logic, debugging, testing and technical documentation.',
+    skills: ['Debugging', 'Testing', 'Documentation'],
+    icon: 'settings',
+  },
+  {
+    id: 'botany',
+    role: 'B.Sc. Botany',
+    company: 'Bharathiar University',
+    date: 'Sep 2022 – May 2025',
+    desc: 'Bachelor of Science in Botany',
+    skills: ['Microsoft Excel', 'Microsoft Word'],
+    icon: 'graduation',
   },
 ]
-
-export const education = {
-  degree: 'Bachelor of Science \u2013 Botany',
-  status: 'Verified Degree',
-  note: 'Certificate of Degree',
-}

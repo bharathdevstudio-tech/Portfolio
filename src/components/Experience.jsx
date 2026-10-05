@@ -1,63 +1,120 @@
-import { FaBriefcase, FaGraduationCap, FaCircleCheck } from 'react-icons/fa6'
+import {
+  FaCode,
+  FaBuilding,
+  FaScrewdriverWrench,
+  FaGraduationCap,
+  FaLinkedinIn,
+  FaArrowUpRightFromSquare,
+} from 'react-icons/fa6'
 import Section from './Section'
 import Reveal from './Reveal'
-import { experience, education } from '../data/experience'
+import { careerProfile, careerHeading, careerTimeline } from '../data/experience'
+
+const ICONS = {
+  code: <FaCode />,
+  building: <FaBuilding />,
+  settings: <FaScrewdriverWrench />,
+  graduation: <FaGraduationCap />,
+}
 
 export default function Experience() {
   return (
-    <Section
-      id="career"
-      eyebrow="Career Path"
-      title={
-        <>
-          Experience that <span className="gradient-text">shapes me</span>
-        </>
-      }
-      subtitle="From freelance builds to production business applications — every project has sharpened a new skill."
-    >
-      <div className="career-wrap">
-        <ol className="timeline">
-          {experience.map((job, i) => (
-            <li key={job.id}>
-              <Reveal delay={i * 100} className="timeline-item">
-                <span
-                  className={`timeline-dot ${job.current ? 'timeline-dot-current' : ''}`}
-                  aria-hidden="true"
-                />
-                <div className="timeline-card glass">
-                  <div className="timeline-head">
-                    <div className="timeline-badge" aria-hidden="true">
-                      <FaBriefcase />
-                    </div>
-                    <div>
-                      <h3 className="timeline-role">{job.role}</h3>
-                      <p className="timeline-company">{job.company}</p>
-                    </div>
-                    <span className={`timeline-period ${job.current ? 'timeline-period-current' : ''}`}>
-                      {job.current && <span className="timeline-pulse" aria-hidden="true" />}
-                      {job.period}
-                    </span>
-                  </div>
-                  <p className="timeline-desc">{job.desc}</p>
-                </div>
-              </Reveal>
-            </li>
-          ))}
-        </ol>
+    <Section id="career" bare labelledBy="career-heading">
+      <div className="career-bg" aria-hidden="true">
+        <span className="career-glow career-glow-1" />
+        <span className="career-glow career-glow-2" />
+        <span className="career-grid-lines" />
+      </div>
 
-        <Reveal className="education-card glass-strong">
-          <div className="education-icon" aria-hidden="true">
-            <FaGraduationCap />
+      <div className="container career-layout">
+        {/* ---------- Left: profile panel ---------- */}
+        <Reveal className="career-profile" delay={0}>
+          <div className="career-profile-card">
+            <span className="career-monogram" aria-hidden="true">
+              {careerProfile.monogram}
+            </span>
+
+            <h3 className="career-profile-name">{careerProfile.name}</h3>
+            <p className="career-profile-title">{careerProfile.title}</p>
+            <p className="career-profile-desc">{careerProfile.description}</p>
+
+            <div className="career-profile-skills">
+              {careerProfile.skills.map((skill) => (
+                <span className="career-chip" key={skill}>
+                  {skill}
+                </span>
+              ))}
+            </div>
+
+            <a
+              className="career-linkedin"
+              href={careerProfile.linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaLinkedinIn aria-hidden="true" />
+              {careerProfile.linkedinLabel}
+              <FaArrowUpRightFromSquare className="career-linkedin-icon" aria-hidden="true" />
+            </a>
+
+            <a
+              className="career-profile-url"
+              href={careerProfile.linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {careerProfile.linkedinUrl}
+            </a>
           </div>
-          <div>
-            <h3 className="education-title">{education.degree}</h3>
-            <p className="education-note">{education.status}</p>
-          </div>
-          <span className="education-badge">
-            <FaCircleCheck aria-hidden="true" />
-            {education.note}
-          </span>
         </Reveal>
+
+        {/* ---------- Right: timeline ---------- */}
+        <div className="career-main">
+          <Reveal className="career-intro" delay={60}>
+            <h2 className="career-heading" id="career-heading">
+              {careerHeading.titleLead}{' '}
+              <span className="career-heading-accent">{careerHeading.titleAccent}</span>
+            </h2>
+            <p className="career-subtitle">{careerHeading.subtitle}</p>
+          </Reveal>
+
+          <ol className="career-timeline">
+            {careerTimeline.map((item, i) => (
+              <li key={item.id} className="career-item">
+                <span className="career-node" aria-hidden="true">
+                  <span className="career-node-inner" />
+                </span>
+
+                <Reveal delay={i * 110} className="career-card">
+                  <span className="career-card-date">{item.date}</span>
+
+                  <div className="career-card-head">
+                    <span className="career-card-icon" aria-hidden="true">
+                      {ICONS[item.icon]}
+                    </span>
+
+                    <div className="career-card-titles">
+                      <h3 className="career-card-role">{item.role}</h3>
+                      <p className="career-card-company">{item.company}</p>
+                    </div>
+                  </div>
+
+                  {item.type && <p className="career-card-type">{item.type}</p>}
+
+                  <p className="career-card-desc">{item.desc}</p>
+
+                  <div className="career-card-skills">
+                    {item.skills.map((skill) => (
+                      <span className="career-chip" key={skill}>
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </Reveal>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </Section>
   )

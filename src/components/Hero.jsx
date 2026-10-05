@@ -148,6 +148,22 @@ function Hero() {
             ))}
           </div>
         </Reveal>
+
+        <Reveal className="hero-portrait-wrap" delay={260} as="div">
+          <div className="hero-portrait">
+            <img
+              className="hero-portrait-img"
+              src={profile.image}
+              alt={`${profile.name} — ${profile.role}`}
+              width="420"
+              height="420"
+              loading="eager"
+              decoding="async"
+            />
+            <span className="hero-portrait-ring" aria-hidden="true" />
+            <span className="hero-portrait-glow" aria-hidden="true" />
+          </div>
+        </Reveal>
       </div>
     </section>
   );
