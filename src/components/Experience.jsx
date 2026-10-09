@@ -1,13 +1,7 @@
-import {
-  FaCode,
-  FaBuilding,
-  FaScrewdriverWrench,
-  FaLinkedinIn,
-  FaArrowUpRightFromSquare,
-} from 'react-icons/fa6'
+import { FaCode, FaBuilding, FaScrewdriverWrench } from 'react-icons/fa6'
 import Section from './Section'
 import Reveal from './Reveal'
-import { careerProfile, careerHeading, careerTimeline } from '../data/experience'
+import { careerHeading, careerTimeline } from '../data/experience'
 
 const ICONS = {
   code: <FaCode />,
@@ -25,48 +19,7 @@ export default function Experience() {
       </div>
 
       <div className="container career-layout">
-        {/* ---------- Left: profile panel ---------- */}
-        <Reveal className="career-profile" delay={0}>
-          <div className="career-profile-card">
-            <span className="career-monogram" aria-hidden="true">
-              {careerProfile.monogram}
-            </span>
-
-            <h3 className="career-profile-name">{careerProfile.name}</h3>
-            <p className="career-profile-title">{careerProfile.title}</p>
-            <p className="career-profile-desc">{careerProfile.description}</p>
-
-            <div className="career-profile-skills">
-              {careerProfile.skills.map((skill) => (
-                <span className="career-chip" key={skill}>
-                  {skill}
-                </span>
-              ))}
-            </div>
-
-            <a
-              className="career-linkedin"
-              href={careerProfile.linkedinUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FaLinkedinIn aria-hidden="true" />
-              {careerProfile.linkedinLabel}
-              <FaArrowUpRightFromSquare className="career-linkedin-icon" aria-hidden="true" />
-            </a>
-
-            <a
-              className="career-profile-url"
-              href={careerProfile.linkedinUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {careerProfile.linkedinUrl}
-            </a>
-          </div>
-        </Reveal>
-
-        {/* ---------- Right: timeline ---------- */}
+        {/* ---------- Timeline ---------- */}
         <div className="career-main">
           <Reveal className="career-intro" delay={60}>
             <h2 className="career-heading" id="career-heading">

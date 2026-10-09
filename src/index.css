@@ -4385,120 +4385,17 @@ html.is-tab-hidden *::after {
 .career-layout {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: 300px minmax(0, 1fr);
-  gap: 40px;
-  max-width: 1400px;
+  max-width: 1100px;
   margin-inline: auto;
   padding-block: var(--section-pad);
-  align-items: start;
 }
 
-/* ---------- Left profile panel ---------- */
-.career-profile-card {
-  position: sticky;
-  top: calc(var(--nav-h) + 20px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 24px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.045);
-  border: 1px solid var(--border);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-  box-shadow: 0 22px 60px -38px rgba(124, 58, 237, 0.75);
-  overflow: hidden;
-  transition: border-color 250ms var(--ease-out), box-shadow 250ms var(--ease-out),
-    transform 250ms var(--ease-out);
-}
-
-.career-profile-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  padding: 1px;
-  border-radius: inherit;
-  pointer-events: none;
-  background: linear-gradient(160deg, var(--purple), var(--cyan));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.42;
-  transition: opacity 250ms var(--ease-out);
-}
-
-.career-profile-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(167, 139, 250, 0.42);
-  box-shadow: 0 28px 70px -32px rgba(6, 182, 212, 0.65);
-}
-
-.career-profile-card:hover::before {
-  opacity: 0.85;
-}
-
-.career-monogram {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  font-family: var(--font-display);
-  font-size: 2.4rem;
-  font-weight: 700;
-  color: #fff;
-  background: linear-gradient(145deg, var(--purple), var(--cyan));
-  box-shadow: 0 0 34px -6px rgba(124, 58, 237, 0.9);
-  margin-bottom: 18px;
-}
-
-.career-profile-name {
-  position: relative;
-  z-index: 1;
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: #fff;
-}
-
-.career-profile-title {
-  position: relative;
-  z-index: 1;
-  margin-top: 0.2rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  background: linear-gradient(120deg, #c4b5fd, #67e8f9);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.career-profile-desc {
-  position: relative;
-  z-index: 1;
-  margin-top: 0.75rem;
-  font-size: 0.88rem;
-  line-height: 1.6;
-  color: var(--text-2);
-}
-
-.career-profile-skills,
 .career-card-skills {
   position: relative;
   z-index: 1;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-}
-
-.career-profile-skills {
-  justify-content: center;
-  margin-top: 1.15rem;
 }
 
 /* Outlined rounded skill chip. */
@@ -4521,49 +4418,6 @@ html.is-tab-hidden *::after {
   color: #fff;
   border-color: rgba(103, 232, 249, 0.6);
   background: rgba(6, 182, 212, 0.14);
-}
-
-.career-linkedin {
-  position: relative;
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  width: 100%;
-  margin-top: 1.4rem;
-  padding: 12px 18px;
-  border-radius: var(--radius-full);
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #fff;
-  background: linear-gradient(120deg, var(--purple), var(--blue));
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  transition: transform 250ms var(--ease-out), box-shadow 250ms var(--ease-out);
-}
-
-.career-linkedin:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 32px -14px rgba(124, 58, 237, 0.9);
-}
-
-.career-linkedin-icon {
-  font-size: 0.72rem;
-  opacity: 0.8;
-}
-
-.career-profile-url {
-  position: relative;
-  z-index: 1;
-  margin-top: 0.85rem;
-  font-size: 0.72rem;
-  color: var(--text-3);
-  overflow-wrap: anywhere;
-  transition: color 250ms var(--ease-out);
-}
-
-.career-profile-url:hover {
-  color: var(--cyan);
 }
 
 /* ---------- Right heading ---------- */
@@ -4854,11 +4708,6 @@ html.is-tab-hidden *::after {
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1080px) {
-  .career-layout {
-    grid-template-columns: 260px minmax(0, 1fr);
-    gap: 30px;
-  }
-
   .career-card-titles {
     padding-right: 0;
   }
@@ -4875,16 +4724,6 @@ html.is-tab-hidden *::after {
 }
 
 @media (max-width: 860px) {
-  /* Profile panel stacks above the timeline. */
-  .career-layout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 32px;
-  }
-
-  .career-profile-card {
-    position: static;
-  }
-
   .career-node,
   .career-timeline::before {
     display: none;
@@ -4896,8 +4735,7 @@ html.is-tab-hidden *::after {
 }
 
 @media (max-width: 560px) {
-  .career-card,
-  .career-profile-card {
+  .career-card {
     padding: 18px;
     border-radius: 16px;
   }
@@ -4939,9 +4777,7 @@ html.is-tab-hidden *::after {
     animation: none;
   }
 
-  .career-profile-card:hover,
   .career-card:hover,
-  .career-linkedin:hover,
   .career-card:hover .career-card-icon {
     transform: none;
   }

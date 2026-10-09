@@ -1,15 +1,5 @@
 // Career section data — edit here.
 
-export const careerProfile = {
-  monogram: 'B',
-  name: 'Bharath E',
-  title: 'Software Developer',
-  description: 'Business applications, responsive websites & web development.',
-  skills: ['VB.NET', 'SQL Server', 'React.js', 'Node.js'],
-  linkedinLabel: 'View LinkedIn',
-  linkedinUrl: 'https://www.linkedin.com/in/bharath-soft',
-}
-
 export const careerHeading = {
   titleLead: 'My Career',
   titleAccent: 'Journey',
