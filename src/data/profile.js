@@ -44,5 +44,6 @@ export const navLinks = [
   { id: 'work', label: 'Work' },
   { id: 'certificates', label: 'Certificates' },
   { id: 'career', label: 'Career' },
+  { id: 'education', label: 'Education' },
   { id: 'contact', label: 'Contact' },
 ]

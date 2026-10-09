@@ -7,6 +7,7 @@ import Skills from './components/Skills'
 import Projects from './components/Projects'
 import Certificates from './components/Certificates'
 import Experience from './components/Experience'
+import Education from './components/Education'
 import Contact from './components/Contact'
 import BackToTop from './components/BackToTop'
 import ScrollProgress from './components/ScrollProgress'
@@ -62,6 +63,7 @@ function App() {
           <Projects />
           <Certificates />
           <Experience />
+          <Education />
           <Contact />
         </main>
       </div>

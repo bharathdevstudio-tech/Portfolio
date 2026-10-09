@@ -48,13 +48,4 @@ export const careerTimeline = [
     skills: ['Debugging', 'Testing', 'Documentation'],
     icon: 'settings',
   },
-  {
-    id: 'botany',
-    role: 'B.Sc. Botany',
-    company: 'Bharathiar University',
-    date: 'Sep 2022 – May 2025',
-    desc: 'Bachelor of Science in Botany',
-    skills: ['Microsoft Excel', 'Microsoft Word'],
-    icon: 'graduation',
-  },
 ]

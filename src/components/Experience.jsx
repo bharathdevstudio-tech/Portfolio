@@ -2,7 +2,6 @@ import {
   FaCode,
   FaBuilding,
   FaScrewdriverWrench,
-  FaGraduationCap,
   FaLinkedinIn,
   FaArrowUpRightFromSquare,
 } from 'react-icons/fa6'
@@ -14,7 +13,6 @@ const ICONS = {
   code: <FaCode />,
   building: <FaBuilding />,
   settings: <FaScrewdriverWrench />,
-  graduation: <FaGraduationCap />,
 }
 
 export default function Experience() {
