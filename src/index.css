@@ -428,11 +428,16 @@ select:focus-visible,
   justify-content: center;
   width: 36px;
   height: 36px;
+  flex: 0 0 auto;
   border-radius: 10px;
-  background: var(--accent-grad);
-  color: #fff;
-  font-weight: 800;
-  box-shadow: var(--glow-purple);
+}
+
+.nav-logo-mark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.45));
 }
 
 .nav-links {

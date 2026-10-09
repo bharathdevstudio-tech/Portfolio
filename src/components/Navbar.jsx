@@ -57,8 +57,6 @@ export default function Navbar() {
 
   const toggleMenu = () => setMenuOpen((open) => !open)
 
-  const initial = profile.name.trim().charAt(0).toUpperCase() || 'B'
-
   return (
     <>
       <a href="#home" className="skip-link">
@@ -80,7 +78,7 @@ export default function Navbar() {
             aria-label={`${profile.name} — back to top`}
           >
             <span className="nav-logo-mark" aria-hidden="true">
-              {initial}
+              <img src="/images/logo-96.png" alt="" width="36" height="36" decoding="async" />
             </span>
             {profile.name}
           </a>
