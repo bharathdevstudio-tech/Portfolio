@@ -1,5 +1,5 @@
 /* ============================================================
-   BHARATH E â€” Portfolio Design System
+   BHARATH E ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Portfolio Design System
    Dark futuristic glassmorphism with purple / blue / cyan.
    ============================================================ */
 
@@ -572,7 +572,6 @@ select:focus-visible,
   overflow: hidden;
   isolation: isolate;
   scroll-margin-top: var(--nav-h);
-  background: var(--bg);
 }
 
 .hero-inner {
@@ -2769,7 +2768,7 @@ select:focus-visible,
 }
 
 /* ============================================================
-   Backdrop â€” aurora blobs, grid, grain (ambient background)
+   Backdrop - global deep-space nebula (ambient background)
    ============================================================ */
 .backdrop {
   position: fixed;
@@ -2778,83 +2777,20 @@ select:focus-visible,
   overflow: hidden;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 90% 60% at 18% 110%, rgba(124, 58, 237, 0.12), transparent 55%),
-    radial-gradient(ellipse 70% 55% at 110% -10%, rgba(6, 182, 212, 0.1), transparent 55%),
-    var(--bg-0);
-}
-
-.aurora {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.5;
-  will-change: transform;
-}
-
-.aurora-1 {
-  width: 60vmin;
-  height: 60vmin;
-  top: -12vmin;
-  left: -8vmin;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.6), transparent 65%);
-  animation: aurora-drift-1 26s ease-in-out infinite alternate;
-}
-
-.aurora-2 {
-  width: 55vmin;
-  height: 55vmin;
-  bottom: -14vmin;
-  right: -6vmin;
-  background: radial-gradient(circle, rgba(43, 122, 235, 0.45), transparent 65%);
-  animation: aurora-drift-2 30s ease-in-out infinite alternate;
-}
-
-.aurora-3 {
-  width: 40vmin;
-  height: 40vmin;
-  top: 46%;
-  left: 38%;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.35), transparent 65%);
-  animation: aurora-drift-3 34s ease-in-out infinite alternate;
-}
-
-@keyframes aurora-drift-1 {
-  to {
-    transform: translate(9vmin, 6vmin) scale(1.15);
-  }
-}
-
-@keyframes aurora-drift-2 {
-  to {
-    transform: translate(-8vmin, -5vmin) scale(1.1);
-  }
-}
-
-@keyframes aurora-drift-3 {
-  to {
-    transform: translate(5vmin, -7vmin) scale(1.2);
-  }
-}
-
-.grid-overlay {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 30%, transparent 78%);
-  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 30%, transparent 78%);
+    radial-gradient(ellipse 72% 62% at 84% 16%, rgba(30, 27, 75, 0.85), transparent 62%),
+    radial-gradient(ellipse 80% 70% at 18% 92%, rgba(13, 17, 46, 0.8), transparent 66%),
+    #04050e;
 }
 
 .grain {
   position: absolute;
   inset: 0;
-  opacity: 0.5;
+  opacity: 0.4;
+  mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
 }
-
 /* ============================================================
+
    Scanlines + spotlight (fx overlays)
    ============================================================ */
 .scanlines {
@@ -4128,7 +4064,9 @@ select:focus-visible,
 }
 
 /* ============================================================
-   Hero backdrop - cinematic deep-space nebula
+   Nebula - cinematic deep-space layers
+   The scene itself is rendered once in Fx/Backdrop (global, fixed);
+   the hero layers below sit on top of that shared backdrop.
    ============================================================ */
 .hero-bg {
   position: absolute;
@@ -4136,13 +4074,6 @@ select:focus-visible,
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse 72% 62% at 84% 16%, rgba(30, 27, 75, 0.85), transparent 62%),
-    radial-gradient(ellipse 80% 70% at 18% 92%, rgba(13, 17, 46, 0.8), transparent 66%),
-    #04050e;
-  transform: translate3d(calc(var(--par-x, 0) * -6px), calc(var(--par-y, 0) * -5px), 0);
-  transition: transform 0.25s ease-out;
-  will-change: transform;
 }
 
 /* --- Gaseous clouds (SVG turbulence, additive) --- */
@@ -4327,8 +4258,8 @@ select:focus-visible,
     );
 }
 
-/* --- Cinematic vignette --- */
-.hero-vignette {
+/* --- Cinematic vignette (global) --- */
+.space-vignette {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -4337,16 +4268,6 @@ select:focus-visible,
     transparent 54%,
     rgba(3, 4, 12, 0.62) 100%
   );
-}
-
-/* --- Fine film grain --- */
-.hero-grain {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.4;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
 }
 
 /* --- Mobile: trim the heaviest layers, darken top/bottom for stacked copy --- */
@@ -4393,7 +4314,7 @@ select:focus-visible,
 }
 
 /* ============================================================
-   Career journey â€” profile panel + vertical timeline
+   Career journey ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â profile panel + vertical timeline
    ============================================================ */
 .career-bg {
   position: absolute;
@@ -4401,7 +4322,6 @@ select:focus-visible,
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  background: #060d22;
 }
 
 .career-glow {
@@ -4777,7 +4697,7 @@ select:focus-visible,
   opacity: 1;
 }
 
-/* Date badge â€” top-right on wide screens. */
+/* Date badge ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â top-right on wide screens. */
 .career-card-date {
   position: absolute;
   top: 24px;
