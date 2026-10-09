@@ -67,7 +67,9 @@ export default function PageLoader({ loading }) {
             style={{ strokeDasharray: CIRC, strokeDashoffset: dashOffset }}
           />
         </svg>
-        <div className="page-loader-logo">B</div>
+        <div className="page-loader-logo">
+          <img src="/images/logo-192.png" alt="" width="78" height="78" decoding="async" />
+        </div>
       </div>
       <span className="page-loader-count">{pct}%</span>
       <span className="page-loader-text">Loading experience</span>
