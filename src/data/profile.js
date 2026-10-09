@@ -4,7 +4,8 @@ export const profile = {
   name: 'Bharath E',
   firstName: 'Bharath',
   initials: 'BE',
-  image: '/images/profile.png',
+  image: '/images/profile-960.webp',
+  imageSrcSet: '/images/profile-480.webp 480w, /images/profile-960.webp 960w',
   role: 'Full-Stack Developer',
   roles: [
     'Full-Stack Developer',

@@ -202,7 +202,16 @@ export default function About() {
         <Reveal className="about-profile-panel glass-strong" delay={60}>
           <div className="about-profile-summary">
             <div className="about-profile-portrait">
-              <img src={profile.image} alt={`${profile.name}, Software Developer`} />
+              <img
+                src={profile.image}
+                srcSet={profile.imageSrcSet}
+                sizes="150px"
+                alt={`${profile.name}, Software Developer`}
+                width="150"
+                height="150"
+                loading="lazy"
+                decoding="async"
+              />
               <span className="about-avatar-code" aria-hidden="true">
                 &lt;/&gt;
               </span>
@@ -261,7 +270,16 @@ export default function About() {
             <header className="about-chat-header">
               <div className="about-chat-person">
                 <span className="about-chat-avatar" aria-hidden="true">
-                  <img src={profile.image} alt="" />
+                  <img
+                    src={profile.image}
+                    srcSet={profile.imageSrcSet}
+                    sizes="44px"
+                    alt=""
+                    width="44"
+                    height="44"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </span>
                 <div>
                   <h3 id="about-chat-title">Ask Bharath</h3>

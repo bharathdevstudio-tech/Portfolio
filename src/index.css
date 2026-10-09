@@ -2782,6 +2782,14 @@ select:focus-visible,
     #04050e;
 }
 
+/* When the tab is hidden, freeze every animation so a backgrounded tab costs
+   no GPU/CPU or battery. Nothing is unloaded; this is a class toggle only. */
+html.is-tab-hidden *,
+html.is-tab-hidden *::before,
+html.is-tab-hidden *::after {
+  animation-play-state: paused !important;
+}
+
 .grain {
   position: absolute;
   inset: 0;

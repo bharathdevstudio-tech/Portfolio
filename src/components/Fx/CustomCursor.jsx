@@ -31,17 +31,21 @@ export default function CustomCursor() {
 
     const lerp = (a, b, t) => a + (b - a) * t
 
-    const onMove = (e) => {
-      mx = e.clientX
-      my = e.clientY
-    }
-
+    // Only run the rAF loop while the ring is catching up to the pointer, then
+    // stop. An idle page costs nothing; the loop restarts on the next move.
     const loop = () => {
       rx = lerp(rx, mx, 0.16)
       ry = lerp(ry, my, 0.16)
       dot.style.transform = `translate(${mx - 3}px, ${my - 3}px)`
       ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`
-      raf = requestAnimationFrame(loop)
+      const settled = Math.abs(rx - mx) < 0.15 && Math.abs(ry - my) < 0.15
+      raf = settled ? null : requestAnimationFrame(loop)
+    }
+
+    const onMove = (e) => {
+      mx = e.clientX
+      my = e.clientY
+      if (!raf) raf = requestAnimationFrame(loop)
     }
 
     const onOver = (e) => {

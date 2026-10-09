@@ -154,10 +154,13 @@ function Hero() {
             <img
               className="hero-portrait-img"
               src={profile.image}
+              srcSet={profile.imageSrcSet}
+              sizes="(max-width: 900px) 70vw, 420px"
               alt={`${profile.name} — ${profile.role}`}
               width="420"
               height="420"
               loading="eager"
+              fetchPriority="high"
               decoding="async"
             />
             <span className="hero-portrait-ring" aria-hidden="true" />

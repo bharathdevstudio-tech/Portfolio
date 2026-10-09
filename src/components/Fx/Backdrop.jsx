@@ -110,6 +110,17 @@ export default function Backdrop() {
     }
   }, [reduced])
 
+  // Freeze every animation while the tab is backgrounded so a hidden tab costs
+  // no CPU/GPU or battery. Purely a class toggle; nothing is unloaded.
+  useEffect(() => {
+    const sync = () => {
+      document.documentElement.classList.toggle('is-tab-hidden', document.hidden)
+    }
+    sync()
+    document.addEventListener('visibilitychange', sync)
+    return () => document.removeEventListener('visibilitychange', sync)
+  }, [])
+
   return (
     <div className="backdrop" ref={layerRef} aria-hidden="true">
       {/* --- Volumetric gas clouds (SVG turbulence, additive) --- */}
