@@ -1,74 +1,77 @@
-// Futuristic AI-engineer hero backdrop. Pure CSS animation + tiny JS only for
-// generating randomly-placed decorations and easing the mouse-parallax (rAF).
-// No images, no canvas, no 3D — stays lightweight and honors reduced motion.
+// Cinematic deep-space nebula hero backdrop.
+//
+// Pure CSS + inline SVG (feTurbulence) for the gaseous clouds, a generated SVG
+// star field for the "thousands of stars" layer, and a small JS set of
+// twinkling stars / drifting dust motes. No raster images, so it stays razor
+// sharp at 4K and costs almost nothing to ship. Honors prefers-reduced-motion.
+//
+// Composition: the brightest formations sit upper-right / center-right; the
+// left-center stays dark so hero copy and CTAs keep clean negative space.
 import { useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 
-const GRADIENT = ['#7c3aed', '#4f46e5', '#0ea5e9', '#06b6d4']
-
-const CODE_FRAGMENTS = ['</>', '{ }', 'const', '=>', 'AI', 'API', 'React', 'Python', '0x1F', 'useState', 'npm run', '<Dev/>']
-
-const SHAPES = [
-  { kind: 'square' },
-  { kind: 'ring' },
-  { kind: 'triangle' },
-  { kind: 'diamond' },
-  { kind: 'hex' },
-]
+const STAR_TINTS = ['#ffffff', '#e0ecff', '#ede9fe', '#d8fbff', '#fff2d6']
 
 function rand(min, max) {
   return Math.random() * (max - min) + min
 }
 
+// Builds an SVG star field as a data URI. Stars are biased toward the right
+// side so the left half of the hero stays calm. Vector output = crisp at 4K.
+function starFieldUri(count, { maxR, minOpacity, maxOpacity }) {
+  let circles = ''
+  for (let i = 0; i < count; i += 1) {
+    const radius = rand(0.3, maxR).toFixed(2)
+    // ~70% of stars land in the right 68% of the frame.
+    const x = (Math.random() < 0.7 ? rand(0.32, 1) : rand(0, 0.34)) * 1600
+    const y = rand(0, 900)
+    const opacity = rand(minOpacity, maxOpacity).toFixed(2)
+    circles += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${radius}" fill="#fff" opacity="${opacity}"/>`
+  }
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">${circles}</svg>`
+  return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`
+}
+
+// Built once at module load (not per render).
+const FAR_STARS = starFieldUri(1300, { maxR: 0.85, minOpacity: 0.16, maxOpacity: 0.7 })
+const NEAR_STARS = starFieldUri(170, { maxR: 1.5, minOpacity: 0.35, maxOpacity: 0.95 })
+
 export default function HeroBackdrop() {
   const reduced = useReducedMotion()
   const layerRef = useRef(null)
-  const [particles, setParticles] = useState([])
-  const [shapes, setShapes] = useState([])
-  const [codes, setCodes] = useState([])
+  const [stars, setStars] = useState([])
+  const [motes, setMotes] = useState([])
 
-  // Build decorations after mount; fewer particles and no floating
-  // geometry / code fragments on small screens.
+  // Brighter twinkling stars + drifting dust. Fewer on small screens.
   useEffect(() => {
     const mq = window.matchMedia('(min-width: 768px)')
     const build = () => {
-      const count = mq.matches ? 26 : 12
-      setParticles(
-        Array.from({ length: count }, (_, i) => ({
+      const wide = mq.matches
+      setStars(
+        Array.from({ length: wide ? 90 : 34 }, (_, i) => {
+          const left = Math.random() < 0.72 ? rand(34, 100) : rand(0, 34)
+          return {
+            id: i,
+            left,
+            top: rand(0, 100),
+            size: rand(1, 2.6),
+            delay: rand(0, 7),
+            dur: rand(4, 9),
+            tint: STAR_TINTS[i % STAR_TINTS.length],
+          }
+        })
+      )
+      setMotes(
+        Array.from({ length: wide ? 18 : 8 }, (_, i) => ({
           id: i,
-          left: rand(2, 98),
-          top: rand(4, 94),
-          size: rand(1.5, 3.2),
-          delay: rand(0, 6),
-          dur: rand(5, 11),
-          color: GRADIENT[i % GRADIENT.length],
+          left: rand(18, 100),
+          top: rand(10, 96),
+          size: rand(1.5, 3.4),
+          delay: rand(0, 12),
+          dur: rand(16, 28),
+          drift: rand(-34, 34),
         }))
-      )
-      setShapes(
-        mq.matches
-          ? SHAPES.map((s, i) => ({
-              id: i,
-              kind: s.kind,
-              left: rand(5, 88),
-              top: rand(8, 86),
-              size: rand(36, 78),
-              delay: rand(0, 8),
-              dur: rand(16, 26),
-            }))
-          : []
-      )
-      setCodes(
-        mq.matches
-          ? CODE_FRAGMENTS.map((text, i) => ({
-              id: i,
-              text,
-              left: rand(2, 94),
-              top: rand(6, 90),
-              size: rand(0.8, 1.6),
-              delay: rand(0, 10),
-              dur: rand(24, 40),
-            }))
-          : []
       )
     }
     build()
@@ -80,8 +83,8 @@ export default function HeroBackdrop() {
     }
   }, [])
 
-  // Smooth mouse parallax: one mousemove listener, rAF-throttled, writes CSS
-  // custom props the layers read. Fully skipped for reduced motion.
+  // Mouse parallax: one listener, rAF-throttled, writes CSS custom props the
+  // layers read. Skipped entirely for reduced motion.
   useEffect(() => {
     if (reduced) return undefined
     let raf = null
@@ -108,75 +111,178 @@ export default function HeroBackdrop() {
 
   return (
     <div className="hero-bg" ref={layerRef} aria-hidden="true">
-      {/* Layer 2 — subtle grid */}
-      <div className="hero-grid" />
-
-      {/* Layers 3–5 — orbs, geo shapes, code, particles (with parallax) */}
-      <div className="hero-parallax">
-        <span className="hero-orb-wrap hero-orb-a">
-          <span className="hero-orb" />
-        </span>
-        <span className="hero-orb-wrap hero-orb-b">
-          <span className="hero-orb" />
-        </span>
-        <span className="hero-orb-wrap hero-orb-c">
-          <span className="hero-orb" />
-        </span>
-
-        {shapes.map((s) => (
-          <span
-            key={s.id}
-            className={`hero-shape hero-shape-${s.kind}`}
-            style={{
-              left: `${s.left}%`,
-              top: `${s.top}%`,
-              width: s.size,
-              height: s.size,
-              animationDelay: `${s.delay}s`,
-              animationDuration: `${s.dur}s`,
-            }}
-          />
-        ))}
-
-        {codes.map((c) => (
-          <span
-            key={c.id}
-            className="hero-code"
-            style={{
-              left: `${c.left}%`,
-              top: `${c.top}%`,
-              fontSize: `${c.size}rem`,
-              animationDelay: `${c.delay}s`,
-              animationDuration: `${c.dur}s`,
-            }}
+      {/* --- Volumetric gas clouds (SVG turbulence, additive) --- */}
+      <svg
+        className="nebula-cloud nebula-cloud-a"
+        viewBox="0 0 1600 900"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        <defs>
+          <radialGradient id="nbGradA" cx="76%" cy="24%" r="62%">
+            <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.92" />
+            <stop offset="34%" stopColor="#6d28d9" stopOpacity="0.62" />
+            <stop offset="66%" stopColor="#3b1d8f" stopOpacity="0.26" />
+            <stop offset="100%" stopColor="#0b1030" stopOpacity="0" />
+          </radialGradient>
+          <filter
+            id="nbFilterA"
+            x="-15%"
+            y="-15%"
+            width="130%"
+            height="130%"
+            colorInterpolationFilters="sRGB"
           >
-            {c.text}
-          </span>
-        ))}
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.0034 0.0052"
+              numOctaves="6"
+              seed="11"
+              result="t"
+            />
+            <feColorMatrix
+              in="t"
+              type="matrix"
+              result="m"
+              values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.95 0.25 0.2 0 -0.42"
+            />
+            <feGaussianBlur in="m" stdDeviation="5" result="b" />
+            <feComposite in="SourceGraphic" in2="b" operator="in" />
+          </filter>
+        </defs>
+        <rect width="1600" height="900" fill="url(#nbGradA)" filter="url(#nbFilterA)" />
+      </svg>
 
-        {particles.map((p) => (
-          <span
-            key={p.id}
-            className="hero-particle"
-            style={{
-              left: `${p.left}%`,
-              top: `${p.top}%`,
-              width: p.size,
-              height: p.size,
-              background: p.color,
-              boxShadow: `0 0 ${p.size * 5}px ${p.color}`,
-              animationDelay: `${p.delay}s`,
-              animationDuration: `${p.dur}s`,
-            }}
-          />
-        ))}
-      </div>
+      <svg
+        className="nebula-cloud nebula-cloud-b"
+        viewBox="0 0 1600 900"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        <defs>
+          <radialGradient id="nbGradB" cx="90%" cy="60%" r="58%">
+            <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.82" />
+            <stop offset="40%" stopColor="#0ea5e9" stopOpacity="0.5" />
+            <stop offset="72%" stopColor="#1e3a8a" stopOpacity="0.22" />
+            <stop offset="100%" stopColor="#0b1030" stopOpacity="0" />
+          </radialGradient>
+          <filter
+            id="nbFilterB"
+            x="-15%"
+            y="-15%"
+            width="130%"
+            height="130%"
+            colorInterpolationFilters="sRGB"
+          >
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.0042 0.0064"
+              numOctaves="5"
+              seed="29"
+              result="t"
+            />
+            <feColorMatrix
+              in="t"
+              type="matrix"
+              result="m"
+              values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.9 0.3 0.15 0 -0.4"
+            />
+            <feGaussianBlur in="m" stdDeviation="6" result="b" />
+            <feComposite in="SourceGraphic" in2="b" operator="in" />
+          </filter>
+        </defs>
+        <rect width="1600" height="900" fill="url(#nbGradB)" filter="url(#nbFilterB)" />
+      </svg>
 
-      {/* Soft radial glow behind the main content */}
+      <svg
+        className="nebula-cloud nebula-cloud-c"
+        viewBox="0 0 1600 900"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        <defs>
+          <radialGradient id="nbGradC" cx="64%" cy="10%" r="46%">
+            <stop offset="0%" stopColor="#e879f9" stopOpacity="0.6" />
+            <stop offset="44%" stopColor="#a855f7" stopOpacity="0.38" />
+            <stop offset="100%" stopColor="#0b1030" stopOpacity="0" />
+          </radialGradient>
+          <filter
+            id="nbFilterC"
+            x="-15%"
+            y="-15%"
+            width="130%"
+            height="130%"
+            colorInterpolationFilters="sRGB"
+          >
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.005 0.0072"
+              numOctaves="5"
+              seed="43"
+              result="t"
+            />
+            <feColorMatrix
+              in="t"
+              type="matrix"
+              result="m"
+              values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1 0.2 0.2 0 -0.45"
+            />
+            <feGaussianBlur in="m" stdDeviation="4" result="b" />
+            <feComposite in="SourceGraphic" in2="b" operator="in" />
+          </filter>
+        </defs>
+        <rect width="1600" height="900" fill="url(#nbGradC)" filter="url(#nbFilterC)" />
+      </svg>
+
+      {/* --- Soft volumetric light + faint light shafts --- */}
+      <div className="nebula-veil" />
+      <div className="nebula-rays" />
+
+      {/* --- Star fields (vector, generated) --- */}
+      <div className="hero-stars hero-stars-far" style={{ backgroundImage: FAR_STARS }} />
+      <div className="hero-stars hero-stars-near" style={{ backgroundImage: NEAR_STARS }} />
+
+      {/* --- Twinkling stars --- */}
+      {stars.map((s) => (
+        <span
+          key={s.id}
+          className="hero-star"
+          style={{
+            left: `${s.left}%`,
+            top: `${s.top}%`,
+            width: s.size,
+            height: s.size,
+            background: s.tint,
+            boxShadow: `0 0 ${s.size * 4}px ${s.tint}`,
+            animationDelay: `${s.delay}s`,
+            animationDuration: `${s.dur}s`,
+          }}
+        />
+      ))}
+
+      {/* --- Drifting cosmic dust --- */}
+      {motes.map((m) => (
+        <span
+          key={m.id}
+          className="hero-mote"
+          style={{
+            left: `${m.left}%`,
+            top: `${m.top}%`,
+            width: m.size,
+            height: m.size,
+            animationDelay: `${m.delay}s`,
+            animationDuration: `${m.dur}s`,
+            '--mote-x': `${m.drift}px`,
+          }}
+        />
+      ))}
+
+      {/* --- Celestial glow behind the copy --- */}
       <div className="hero-glow" />
 
-      {/* Layer 6 — vignette around page edges */}
+      {/* --- Dark scrim: keeps the left/center clear for white typography --- */}
+      <div className="hero-scrim" />
+
+      {/* --- Cinematic vignette + fine grain --- */}
       <div className="hero-vignette" />
+      <div className="hero-grain" />
     </div>
   )
 }

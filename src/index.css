@@ -1,5 +1,5 @@
 /* ============================================================
-   BHARATH E — Portfolio Design System
+   BHARATH E â€” Portfolio Design System
    Dark futuristic glassmorphism with purple / blue / cyan.
    ============================================================ */
 
@@ -837,18 +837,6 @@ select:focus-visible,
 
   .hero-desc {
     margin-inline: auto;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-orb-a {
-    left: -26%;
-    opacity: 0.3;
-  }
-
-  .hero-orb-b {
-    right: -14%;
-    opacity: 0.38;
   }
 }
 
@@ -2781,7 +2769,7 @@ select:focus-visible,
 }
 
 /* ============================================================
-   Backdrop — aurora blobs, grid, grain (ambient background)
+   Backdrop â€” aurora blobs, grid, grain (ambient background)
    ============================================================ */
 .backdrop {
   position: fixed;
@@ -4140,7 +4128,7 @@ select:focus-visible,
 }
 
 /* ============================================================
-   Hero backdrop — dark AI-engineer aesthetic (CSS-only animation)
+   Hero backdrop - cinematic deep-space nebula
    ============================================================ */
 .hero-bg {
   position: absolute;
@@ -4149,187 +4137,263 @@ select:focus-visible,
   overflow: hidden;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 85% 65% at 12% 110%, rgba(79, 70, 229, 0.14), transparent 60%),
-    radial-gradient(ellipse 70% 55% at 108% -8%, rgba(14, 165, 233, 0.12), transparent 60%),
-    #05050b;
-  transform: translate3d(calc(var(--par-x, 0) * -8px), calc(var(--par-y, 0) * -6px), 0);
-  transition: transform 0.2s ease-out;
+    radial-gradient(ellipse 72% 62% at 84% 16%, rgba(30, 27, 75, 0.85), transparent 62%),
+    radial-gradient(ellipse 80% 70% at 18% 92%, rgba(13, 17, 46, 0.8), transparent 66%),
+    #04050e;
+  transform: translate3d(calc(var(--par-x, 0) * -6px), calc(var(--par-y, 0) * -5px), 0);
+  transition: transform 0.25s ease-out;
   will-change: transform;
 }
 
-/* Layer 2 — subtle grid, faded toward the center/edges */
-.hero-grid {
+/* --- Gaseous clouds (SVG turbulence, additive) --- */
+.nebula-cloud {
+  position: absolute;
+  inset: -6%;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  transform: translate3d(calc(var(--par-x, 0) * 10px), calc(var(--par-y, 0) * 8px), 0);
+}
+
+.nebula-cloud-a {
+  opacity: 0.92;
+  animation: nebula-drift-a 34s ease-in-out infinite alternate;
+}
+
+.nebula-cloud-b {
+  opacity: 0.8;
+  transform: translate3d(calc(var(--par-x, 0) * -12px), calc(var(--par-y, 0) * -9px), 0);
+  animation: nebula-drift-b 42s ease-in-out infinite alternate;
+}
+
+.nebula-cloud-c {
+  opacity: 0.6;
+  animation: nebula-drift-c 38s ease-in-out infinite alternate;
+}
+
+@keyframes nebula-drift-a {
+  from { translate: 0 0; scale: 1 1; }
+  to { translate: 0 -16px; scale: 1.08 1.05; }
+}
+
+@keyframes nebula-drift-b {
+  from { translate: 0 0; scale: 1.04 1; }
+  to { translate: -18px 12px; scale: 1 1.06; }
+}
+
+@keyframes nebula-drift-c {
+  from { translate: 0 0; scale: 1; opacity: 0.48; }
+  to { translate: 12px 16px; scale: 1.1; opacity: 0.66; }
+}
+
+/* --- Soft volumetric light --- */
+.nebula-veil {
+  position: absolute;
+  inset: -12%;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 46% 40% at 78% 22%, rgba(124, 58, 237, 0.36), transparent 62%),
+    radial-gradient(ellipse 40% 36% at 92% 58%, rgba(6, 182, 212, 0.26), transparent 64%),
+    radial-gradient(ellipse 32% 28% at 62% 6%, rgba(217, 70, 239, 0.2), transparent 66%);
+  filter: blur(22px);
+  animation: nebula-breathe 16s ease-in-out infinite alternate;
+}
+
+@keyframes nebula-breathe {
+  from { opacity: 0.78; }
+  to { opacity: 1; }
+}
+
+/* --- Volumetric light shafts --- */
+.nebula-rays {
+  position: absolute;
+  inset: -22%;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  background: conic-gradient(
+    from 196deg at 82% 16%,
+    transparent 0deg,
+    rgba(139, 92, 246, 0.17) 13deg,
+    transparent 29deg,
+    rgba(34, 211, 238, 0.13) 45deg,
+    transparent 61deg,
+    rgba(217, 70, 239, 0.11) 77deg,
+    transparent 95deg
+  );
+  filter: blur(30px);
+  opacity: 0.8;
+  animation: nebula-rays-turn 60s linear infinite;
+}
+
+@keyframes nebula-rays-turn {
+  to { rotate: 8deg; }
+}
+
+/* --- Star fields (vector, generated) --- */
+.hero-stars {
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(to right, rgba(139, 148, 255, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(139, 148, 255, 0.06) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 78% 68% at 50% 46%, #000 25%, transparent 78%);
-  -webkit-mask-image: radial-gradient(ellipse 78% 68% at 50% 46%, #000 25%, transparent 78%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: screen;
+  pointer-events: none;
 }
 
-/* Parallax group — orbs / shapes / code / particles drift subtly with the mouse */
-.hero-parallax {
-  position: absolute;
-  inset: 0;
-  transform: translate3d(calc(var(--par-x, 0) * 14px), calc(var(--par-y, 0) * 10px), 0);
-  will-change: transform;
+.hero-stars-far {
+  opacity: 0.72;
+  transform: translate3d(calc(var(--par-x, 0) * 6px), calc(var(--par-y, 0) * 5px), 0);
 }
 
-/* Layer 3 — large blurred gradient orbs */
-.hero-orb-wrap {
-  position: absolute;
-  display: block;
+.hero-stars-near {
+  opacity: 0.88;
+  transform: translate3d(calc(var(--par-x, 0) * 12px), calc(var(--par-y, 0) * 9px), 0);
+  animation: stars-breathe 13s ease-in-out infinite alternate;
 }
 
-.hero-orb-wrap .hero-orb {
-  position: absolute;
-  left: -200px;
-  top: -200px;
-  width: 400px;
-  height: 400px;
-  border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.4;
+@keyframes stars-breathe {
+  from { opacity: 0.7; }
+  to { opacity: 0.95; }
 }
 
-.hero-orb-a {
-  left: -12%;
-  top: -18%;
-  transform: translate3d(calc(var(--par-x, 0) * 26px), calc(var(--par-y, 0) * 20px), 0);
-}
-
-.hero-orb-a .hero-orb {
-  background: radial-gradient(circle at 35% 35%, rgba(124, 58, 237, 0.65), rgba(79, 70, 229, 0.28) 55%, transparent 75%);
-  animation: orb-drift-a 22s var(--ease-out) infinite alternate;
-}
-
-.hero-orb-b {
-  right: -14%;
-  top: 8%;
-  transform: translate3d(calc(var(--par-x, 0) * -22px), calc(var(--par-y, 0) * -16px), 0);
-}
-
-.hero-orb-b .hero-orb {
-  background: radial-gradient(circle at 60% 40%, rgba(14, 165, 233, 0.5), rgba(6, 182, 212, 0.22) 55%, transparent 78%);
-  animation: orb-drift-b 26s var(--ease-out) infinite alternate;
-}
-
-.hero-orb-c {
-  left: -10%;
-  bottom: -24%;
-  transform: translate3d(calc(var(--par-x, 0) * 18px), calc(var(--par-y, 0) * -14px), 0);
-}
-
-.hero-orb-c .hero-orb {
-  background: radial-gradient(circle at 45% 55%, rgba(79, 70, 229, 0.5), rgba(124, 58, 237, 0.2) 55%, transparent 78%);
-  animation: orb-drift-c 30s var(--ease-out) infinite alternate;
-}
-
-@keyframes orb-drift-a {
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to { transform: translate3d(120px, 60px, 0) scale(1.25); }
-}
-
-@keyframes orb-drift-b {
-  from { transform: translate3d(0, 0, 0) scale(1.1); }
-  to { transform: translate3d(-100px, 80px, 0) scale(0.9); }
-}
-
-@keyframes orb-drift-c {
-  from { transform: translate3d(0, 0, 0) scale(0.95); }
-  to { transform: translate3d(80px, -70px, 0) scale(1.2); }
-}
-
-/* Layer 4 — small glowing particles/stars */
-.hero-particle {
+/* --- Twinkling stars --- */
+.hero-star {
   position: absolute;
   border-radius: 50%;
   opacity: 0;
-  animation: particle-twinkle 8s ease-in-out infinite;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: star-twinkle 6s ease-in-out infinite;
 }
 
-@keyframes particle-twinkle {
-  0%, 100% { opacity: 0; transform: scale(0.6); }
-  45% { opacity: 0.9; transform: scale(1.1); }
-  60% { opacity: 0.5; transform: scale(0.8); }
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  40% { opacity: 1; transform: scale(1); }
+  58% { opacity: 0.5; transform: scale(0.78); }
 }
 
-/* Layer 5 — floating abstract geometric shapes */
-.hero-shape {
+/* --- Drifting cosmic dust --- */
+.hero-mote {
   position: absolute;
-  opacity: 0.16;
-  animation: shape-float 20s ease-in-out infinite alternate;
-  will-change: transform;
+  border-radius: 50%;
+  background: rgba(199, 210, 254, 0.55);
+  box-shadow: 0 0 6px rgba(165, 180, 252, 0.5);
+  opacity: 0;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: mote-drift 22s linear infinite;
 }
 
-.hero-shape-square { border: 1px solid rgba(14, 165, 233, 0.5); border-radius: 4px; }
-.hero-shape-ring { border: 2px solid rgba(124, 58, 237, 0.45); border-radius: 50%; }
-.hero-shape-triangle {
-  width: 0 !important;
-  height: 0 !important;
-  border-left: 22px solid transparent;
-  border-right: 22px solid transparent;
-  border-bottom: 38px solid rgba(6, 182, 212, 0.3);
-  opacity: 0.14;
-}
-.hero-shape-diamond { border: 1px solid rgba(168, 85, 247, 0.5); transform: rotate(45deg); }
-.hero-shape-hex {
-  clip-path: polygon(25% 6%, 75% 6%, 100% 50%, 75% 94%, 25% 94%, 0% 50%);
-  background: rgba(59, 130, 246, 0.14);
-  border: none;
+@keyframes mote-drift {
+  0% { opacity: 0; transform: translate3d(0, 22px, 0) scale(0.7); }
+  16% { opacity: 0.62; }
+  80% { opacity: 0.4; }
+  100% { opacity: 0; transform: translate3d(var(--mote-x, 20px), -72px, 0) scale(1); }
 }
 
-@keyframes shape-float {
-  from { translate: 0 0; }
-  to { translate: 24px -30px; }
-}
-
-/* Optional — very subtle floating code fragments (desktop only) */
-.hero-code {
-  position: absolute;
-  font-family: var(--font-mono);
-  color: rgba(148, 163, 255, 0.32);
-  opacity: 0.1;
-  white-space: nowrap;
-  animation: code-drift 32s ease-in-out infinite alternate;
-  will-change: transform;
-}
-
-@keyframes code-drift {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(0, -46px, 0); }
-}
-
-/* Soft radial light glow behind the main content */
+/* --- Celestial glow behind the copy --- */
 .hero-glow {
   position: absolute;
   inset: 0;
+  pointer-events: none;
   background: radial-gradient(
-    ellipse 58% 48% at 50% 45%,
-    rgba(124, 58, 237, 0.16),
-    rgba(59, 130, 246, 0.08) 42%,
+    ellipse 56% 46% at 46% 46%,
+    rgba(124, 58, 237, 0.14),
+    rgba(59, 130, 246, 0.07) 44%,
     transparent 72%
   );
 }
 
-/* Layer 6 — soft vignette around page edges */
+/* --- Negative-space scrim: keeps the left / center readable --- */
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(4, 6, 18, 0.92) 0%,
+      rgba(4, 6, 18, 0.74) 24%,
+      rgba(4, 6, 18, 0.34) 46%,
+      rgba(4, 6, 18, 0.08) 62%,
+      transparent 74%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(4, 6, 18, 0.5) 0%,
+      transparent 20%,
+      transparent 72%,
+      rgba(4, 6, 18, 0.66) 100%
+    );
+}
+
+/* --- Cinematic vignette --- */
 .hero-vignette {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 90% 80% at 50% 45%, transparent 58%, rgba(5, 5, 11, 0.55) 100%),
-    linear-gradient(to bottom, rgba(5, 5, 11, 0.35), transparent 18%, transparent 82%, rgba(5, 5, 11, 0.4));
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 92% 82% at 52% 44%,
+    transparent 54%,
+    rgba(3, 4, 12, 0.62) 100%
+  );
 }
 
+/* --- Fine film grain --- */
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
+}
+
+/* --- Mobile: trim the heaviest layers, darken top/bottom for stacked copy --- */
+@media (max-width: 768px) {
+  .nebula-cloud-c,
+  .nebula-rays {
+    display: none;
+  }
+
+  .nebula-cloud {
+    inset: -2%;
+  }
+
+  .hero-scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(4, 6, 18, 0.62) 0%,
+      rgba(4, 6, 18, 0.3) 26%,
+      rgba(4, 6, 18, 0.42) 58%,
+      rgba(4, 6, 18, 0.8) 100%
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nebula-cloud,
+  .nebula-veil,
+  .nebula-rays,
+  .hero-stars-near,
+  .hero-star,
+  .hero-mote {
+    animation: none;
+  }
+
+  .hero-star,
+  .hero-mote {
+    opacity: 0.6;
+    transform: none;
+  }
+}
 .hero-copy {
   position: relative;
   z-index: 3;
 }
 
 /* ============================================================
-   Career journey — profile panel + vertical timeline
+   Career journey â€” profile panel + vertical timeline
    ============================================================ */
 .career-bg {
   position: absolute;
@@ -4713,7 +4777,7 @@ select:focus-visible,
   opacity: 1;
 }
 
-/* Date badge — top-right on wide screens. */
+/* Date badge â€” top-right on wide screens. */
 .career-card-date {
   position: absolute;
   top: 24px;
