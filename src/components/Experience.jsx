@@ -31,13 +31,16 @@ export default function Experience() {
 
           <ol className="career-timeline">
             {careerTimeline.map((item, i) => (
-              <li key={item.id} className="career-item">
+              <li
+                key={item.id}
+                className={`career-item ${i % 2 === 0 ? 'career-item--left' : 'career-item--right'}`}
+              >
                 <span className="career-node" aria-hidden="true">
                   <span className="career-node-inner" />
                 </span>
 
-                <Reveal delay={i * 110} className="career-card">
-                  <div className="career-card-left">
+                <Reveal delay={i * 110} className="career-reveal">
+                  <div className="career-card">
                     <span className="career-card-date">{item.date}</span>
 
                     <div className="career-card-head">
@@ -52,9 +55,7 @@ export default function Experience() {
                     </div>
 
                     {item.type && <p className="career-card-type">{item.type}</p>}
-                  </div>
 
-                  <div className="career-card-right">
                     <p className="career-card-desc">{item.desc}</p>
 
                     <div className="career-card-skills">

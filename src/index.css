@@ -4444,39 +4444,50 @@ html.is-tab-hidden *::after {
   color: var(--text-2);
 }
 
-/* ---------- Timeline ---------- */
+/* ---------- Alternating centred timeline ---------- */
 .career-timeline {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 28px;
   list-style: none;
 }
 
-/* Thin vertical glowing connector line. */
+/* Thin vertical glowing line, exactly centred in the section. */
 .career-timeline::before {
   content: '';
   position: absolute;
-  top: 12px;
-  bottom: 12px;
-  left: 9px;
+  top: 10px;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 2px;
   border-radius: 2px;
   background: linear-gradient(var(--purple), var(--cyan));
-  box-shadow: 0 0 12px rgba(124, 58, 237, 0.55);
-  opacity: 0.55;
+  box-shadow: 0 0 14px rgba(124, 58, 237, 0.6);
+  opacity: 0.6;
 }
 
+/* Each row is half the width; the card alternates side via .career-item--left/--right. */
 .career-item {
   position: relative;
+  min-width: 0;
+  width: 50%;
+  padding-right: 46px;
+}
+
+.career-item--right {
+  margin-left: 50%;
+  padding-right: 0;
   padding-left: 46px;
 }
 
-/* Circular glowing node. */
+/* Circular glowing node sitting on the centre line. */
 .career-node {
   position: absolute;
-  left: 0;
-  top: 26px;
+  top: 34px;
+  right: 0;
+  transform: translateX(50%);
   z-index: 2;
   display: grid;
   place-items: center;
@@ -4486,6 +4497,35 @@ html.is-tab-hidden *::after {
   background: #060d22;
   border: 2px solid var(--cyan);
   box-shadow: 0 0 12px rgba(6, 182, 212, 0.7);
+}
+
+.career-item--right .career-node {
+  left: 0;
+  right: auto;
+  transform: translateX(-50%);
+}
+
+/* Connector drawn from the node out to the card. */
+.career-node::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 36px;
+  height: 2px;
+  transform: translateY(-50%);
+  background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.7), var(--cyan));
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.career-item--left .career-node::before {
+  right: 100%;
+}
+
+.career-item--right .career-node::before {
+  left: 100%;
+  right: auto;
+  background: linear-gradient(270deg, transparent, rgba(124, 58, 237, 0.7), var(--cyan));
 }
 
 .career-node-inner {
@@ -4658,52 +4698,24 @@ html.is-tab-hidden *::after {
   margin-top: 16px;
 }
 
-/* Split job cards into two columns once the timeline column is wide enough:
-   date / role / company on the left, description + skill chips on the right. */
-.career-main {
-  container-type: inline-size;
+/* Inside the timeline the date sits inline at the top of the card. */
+.career-timeline .career-card-date {
+  position: static;
+  display: inline-flex;
+  margin: 0 0 14px;
 }
 
-.career-card-left,
-.career-card-right {
-  position: relative;
-  z-index: 2;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
+.career-timeline .career-card-titles {
+  padding-right: 0;
 }
 
-.career-card-left {
-  align-items: flex-start;
+/* Directional scroll reveal — left cards slide in from the left, right from the right. */
+.career-item--left .career-reveal:not(.is-revealed) {
+  transform: translateY(22px) translateX(-26px);
 }
 
-/* Let the icon + titles row fill the left column so long text wraps. */
-.career-card-left .career-card-head {
-  align-self: stretch;
-}
-
-@container (min-width: 640px) {
-  .career-timeline .career-card {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: 28px;
-    align-items: start;
-  }
-
-  .career-timeline .career-card-date {
-    position: static;
-    margin-top: 0;
-    margin-bottom: 14px;
-    align-self: flex-start;
-  }
-
-  .career-timeline .career-card-titles {
-    padding-right: 0;
-  }
-
-  .career-timeline .career-card-desc {
-    margin-top: 0;
-  }
+.career-item--right .career-reveal:not(.is-revealed) {
+  transform: translateY(22px) translateX(26px);
 }
 
 /* ---------- Responsive ---------- */
@@ -4723,14 +4735,68 @@ html.is-tab-hidden *::after {
   }
 }
 
-@media (max-width: 860px) {
-  .career-node,
-  .career-timeline::before {
-    display: none;
+/* Tablet: keep the alternating layout, tighten spacing. */
+@media (max-width: 1023px) {
+  .career-timeline {
+    gap: 20px;
   }
 
   .career-item {
-    padding-left: 0;
+    padding-right: 34px;
+  }
+
+  .career-item--right {
+    padding-left: 34px;
+  }
+
+  .career-card {
+    padding: 20px;
+  }
+
+  .career-node {
+    top: 30px;
+  }
+
+  .career-node::before {
+    width: 26px;
+  }
+}
+
+/* Mobile: single column, timeline moves to the left edge. */
+@media (max-width: 767px) {
+  .career-timeline::before {
+    left: 20px;
+    transform: none;
+  }
+
+  .career-item,
+  .career-item--right {
+    width: 100%;
+    margin-left: 0;
+    padding-right: 0;
+    padding-left: 46px;
+  }
+
+  .career-node,
+  .career-item--right .career-node {
+    left: 11px;
+    right: auto;
+    transform: none;
+    top: 28px;
+  }
+
+  .career-item .career-node::before,
+  .career-item--right .career-node::before {
+    left: 100%;
+    right: auto;
+    width: 18px;
+    background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.7), var(--cyan));
+  }
+
+  /* Vertical (not sideways) reveal on small screens. */
+  .career-item--left .career-reveal:not(.is-revealed),
+  .career-item--right .career-reveal:not(.is-revealed) {
+    transform: translateY(22px);
   }
 }
 
