@@ -84,29 +84,33 @@ export default function Experience() {
                 </span>
 
                 <Reveal delay={i * 110} className="career-card">
-                  <span className="career-card-date">{item.date}</span>
+                  <div className="career-card-left">
+                    <span className="career-card-date">{item.date}</span>
 
-                  <div className="career-card-head">
-                    <span className="career-card-icon" aria-hidden="true">
-                      {ICONS[item.icon]}
-                    </span>
+                    <div className="career-card-head">
+                      <span className="career-card-icon" aria-hidden="true">
+                        {ICONS[item.icon]}
+                      </span>
 
-                    <div className="career-card-titles">
-                      <h3 className="career-card-role">{item.role}</h3>
-                      <p className="career-card-company">{item.company}</p>
+                      <div className="career-card-titles">
+                        <h3 className="career-card-role">{item.role}</h3>
+                        <p className="career-card-company">{item.company}</p>
+                      </div>
                     </div>
+
+                    {item.type && <p className="career-card-type">{item.type}</p>}
                   </div>
 
-                  {item.type && <p className="career-card-type">{item.type}</p>}
+                  <div className="career-card-right">
+                    <p className="career-card-desc">{item.desc}</p>
 
-                  <p className="career-card-desc">{item.desc}</p>
-
-                  <div className="career-card-skills">
-                    {item.skills.map((skill) => (
-                      <span className="career-chip" key={skill}>
-                        {skill}
-                      </span>
-                    ))}
+                    <div className="career-card-skills">
+                      {item.skills.map((skill) => (
+                        <span className="career-chip" key={skill}>
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </Reveal>
               </li>

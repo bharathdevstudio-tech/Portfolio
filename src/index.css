@@ -4804,6 +4804,54 @@ html.is-tab-hidden *::after {
   margin-top: 16px;
 }
 
+/* Split job cards into two columns once the timeline column is wide enough:
+   date / role / company on the left, description + skill chips on the right. */
+.career-main {
+  container-type: inline-size;
+}
+
+.career-card-left,
+.career-card-right {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.career-card-left {
+  align-items: flex-start;
+}
+
+/* Let the icon + titles row fill the left column so long text wraps. */
+.career-card-left .career-card-head {
+  align-self: stretch;
+}
+
+@container (min-width: 640px) {
+  .career-timeline .career-card {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 28px;
+    align-items: start;
+  }
+
+  .career-timeline .career-card-date {
+    position: static;
+    margin-top: 0;
+    margin-bottom: 14px;
+    align-self: flex-start;
+  }
+
+  .career-timeline .career-card-titles {
+    padding-right: 0;
+  }
+
+  .career-timeline .career-card-desc {
+    margin-top: 0;
+  }
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1080px) {
   .career-layout {
