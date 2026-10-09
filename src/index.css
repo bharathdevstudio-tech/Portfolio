@@ -4892,7 +4892,7 @@ html.is-tab-hidden *::after {
 }
 
 /* ============================================================
-   Education — qualifications
+   Education ï¿½ qualifications
    ============================================================ */
 .education-bg {
   position: absolute;
@@ -4935,4 +4935,32 @@ html.is-tab-hidden *::after {
   .education-grid {
     gap: 16px;
   }
+}
+
+/* ============================================================
+   Performance ï¿½ skip layout/paint for offscreen sections.
+   `contain-intrinsic-size: auto <h>` reserves a placeholder height on
+   first paint (so the scrollbar and #anchor jumps stay accurate) and
+   then remembers each section's real height.
+   ============================================================ */
+main > .section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
+/* Content-box height estimates keep the pre-render scrollbar close; `auto`
+   then remembers each section's real height. Nav scrolling disables deferral
+   first (html.cv-off) so #anchor jumps are always exact. */
+#about { contain-intrinsic-size: auto 1090px; }
+#skills { contain-intrinsic-size: auto 495px; }
+#work { contain-intrinsic-size: auto 770px; }
+#certificates { contain-intrinsic-size: auto 640px; }
+#career { contain-intrinsic-size: auto 1020px; }
+#education { contain-intrinsic-size: auto 350px; }
+#contact { contain-intrinsic-size: auto 1190px; }
+
+/* Set by scrollToSection(): render every section so the measured scroll
+   target is exact, then it stays on for the rest of the session. */
+html.cv-off main > .section {
+  content-visibility: visible;
 }

@@ -35,8 +35,8 @@ function starFieldUri(count, { maxR, minOpacity, maxOpacity }) {
 }
 
 // Built once at module load (not per render).
-const FAR_STARS = starFieldUri(1300, { maxR: 0.85, minOpacity: 0.16, maxOpacity: 0.7 })
-const NEAR_STARS = starFieldUri(170, { maxR: 1.5, minOpacity: 0.35, maxOpacity: 0.95 })
+const FAR_STARS = starFieldUri(900, { maxR: 0.85, minOpacity: 0.16, maxOpacity: 0.7 })
+const NEAR_STARS = starFieldUri(130, { maxR: 1.5, minOpacity: 0.35, maxOpacity: 0.95 })
 
 export default function Backdrop() {
   const reduced = useReducedMotion()
@@ -50,7 +50,7 @@ export default function Backdrop() {
     const build = () => {
       const wide = mq.matches
       setStars(
-        Array.from({ length: wide ? 90 : 34 }, (_, i) => {
+        Array.from({ length: wide ? 64 : 26 }, (_, i) => {
           const left = Math.random() < 0.72 ? rand(34, 100) : rand(0, 34)
           return {
             id: i,
@@ -64,7 +64,7 @@ export default function Backdrop() {
         })
       )
       setMotes(
-        Array.from({ length: wide ? 18 : 8 }, (_, i) => ({
+        Array.from({ length: wide ? 12 : 6 }, (_, i) => ({
           id: i,
           left: rand(18, 100),
           top: rand(10, 96),
@@ -147,7 +147,7 @@ export default function Backdrop() {
             <feTurbulence
               type="fractalNoise"
               baseFrequency="0.0034 0.0052"
-              numOctaves="6"
+              numOctaves="5"
               seed="11"
               result="t"
             />
@@ -187,7 +187,7 @@ export default function Backdrop() {
             <feTurbulence
               type="fractalNoise"
               baseFrequency="0.0042 0.0064"
-              numOctaves="5"
+              numOctaves="4"
               seed="29"
               result="t"
             />
@@ -226,7 +226,7 @@ export default function Backdrop() {
             <feTurbulence
               type="fractalNoise"
               baseFrequency="0.005 0.0072"
-              numOctaves="5"
+              numOctaves="4"
               seed="43"
               result="t"
             />
