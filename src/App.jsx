@@ -9,8 +9,7 @@ import Certificates from './components/Certificates'
 import Experience from './components/Experience'
 import Education from './components/Education'
 import Contact from './components/Contact'
-import BackToTop from './components/BackToTop'
-import ScrollProgress from './components/ScrollProgress'
+import BackToHome from './components/BackToHome'
 import Backdrop from './components/Fx/Backdrop'
 import Scanlines from './components/Fx/Scanlines'
 import Spotlight from './components/Fx/Spotlight'
@@ -68,8 +67,7 @@ function App() {
         </main>
       </div>
 
-      <ScrollProgress />
-      <BackToTop />
+      <BackToHome />
     </>
   )
 }

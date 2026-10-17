@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { FaGithub, FaLink } from 'react-icons/fa6'
+import { FaGithub, FaLink, FaMagnifyingGlass, FaXmark } from 'react-icons/fa6'
 import { FaExternalLinkAlt } from 'react-icons/fa'
 import TechIcon from './TechIcon'
 import Reveal from './Reveal'
@@ -9,11 +9,17 @@ import { projects, projectFilters } from '../data/projects'
 
 export default function Projects() {
   const [filter, setFilter] = useState('All')
+  const [query, setQuery] = useState('')
   const [failedShots, setFailedShots] = useState({})
-  const shown = useMemo(
-    () => (filter === 'All' ? projects : projects.filter((p) => p.tags.includes(filter))),
-    [filter]
-  )
+  const shown = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    return projects.filter((project) => {
+      if (filter !== 'All' && !project.tags.includes(filter)) return false
+      if (!q) return true
+      const haystack = `${project.title} ${project.description} ${project.category} ${project.tags.join(' ')}`
+      return haystack.toLowerCase().includes(q)
+    })
+  }, [filter, query])
 
   return (
     <Section
@@ -26,20 +32,53 @@ export default function Projects() {
       }
       subtitle="Real products I designed, built and shipped — from full-stack platforms to focused UI experiments."
     >
-      <Reveal className="projects-filters" as="div" role="group" aria-label="Filter projects by technology">
-        {projectFilters.map((tech) => (
-          <button
-            key={tech}
-            type="button"
-            className={`filter-chip ${filter === tech ? 'active' : ''}`}
-            aria-pressed={filter === tech}
-            onClick={() => setFilter(tech)}
-          >
-            {tech}
-          </button>
-        ))}
+      <Reveal className="projects-toolbar" as="div">
+        <div className="projects-search">
+          <FaMagnifyingGlass className="projects-search-icon" aria-hidden="true" />
+          <input
+            type="search"
+            className="projects-search-input"
+            placeholder="Search projects by name, tech or keyword…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            aria-label="Search projects"
+          />
+          {query ? (
+            <button
+              type="button"
+              className="projects-search-clear"
+              aria-label="Clear search"
+              onClick={() => setQuery('')}
+            >
+              <FaXmark aria-hidden="true" />
+            </button>
+          ) : null}
+        </div>
+
+        <div className="projects-filters" role="group" aria-label="Filter projects by technology">
+          {projectFilters.map((tech) => (
+            <button
+              key={tech}
+              type="button"
+              className={`filter-chip ${filter === tech ? 'active' : ''}`}
+              aria-pressed={filter === tech}
+              onClick={() => setFilter(tech)}
+            >
+              {tech}
+            </button>
+          ))}
+        </div>
       </Reveal>
 
+      <p className="projects-count" aria-live="polite">
+        Showing <strong>{shown.length}</strong> of {projects.length} projects
+      </p>
+
+      {shown.length === 0 ? (
+        <p className="projects-empty">
+          No projects match your search. Try a different keyword or filter.
+        </p>
+      ) : (
       <div className="projects-grid">
         {shown.map((project, i) => (
           <Reveal key={project.id} delay={(i % 3) * 90} className="project-card">
@@ -115,6 +154,7 @@ export default function Projects() {
           </Reveal>
         ))}
       </div>
+      )}
     </Section>
   )
 }

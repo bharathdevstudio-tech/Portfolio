@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   FaEnvelope,
   FaPhone,
@@ -21,6 +21,7 @@ import {
   FaAt,
   FaTag,
   FaCommentDots,
+  FaRegCopy,
 } from 'react-icons/fa6'
 import { FaCheckCircle } from 'react-icons/fa'
 import Section from './Section'
@@ -51,6 +52,34 @@ function Contact() {
   const [status, setStatus] = useState(null) // { type: 'success'|'error'|'info', text }
   const [sending, setSending] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [copied, setCopied] = useState(null)
+  const copyTimer = useRef(null)
+
+  useEffect(() => () => window.clearTimeout(copyTimer.current), [])
+
+  const copyToClipboard = async (field) => {
+    const value = field === 'email' ? profile.email : profile.phone
+    try {
+      await navigator.clipboard.writeText(value)
+    } catch {
+      const textarea = document.createElement('textarea')
+      textarea.value = value
+      textarea.setAttribute('readonly', '')
+      textarea.style.position = 'fixed'
+      textarea.style.opacity = '0'
+      document.body.appendChild(textarea)
+      textarea.select()
+      try {
+        document.execCommand('copy')
+      } catch {
+        /* clipboard unavailable */
+      }
+      textarea.remove()
+    }
+    setCopied(field)
+    window.clearTimeout(copyTimer.current)
+    copyTimer.current = window.setTimeout(() => setCopied(null), 1800)
+  }
 
   const validate = (values) => {
     const next = {}
@@ -200,6 +229,27 @@ function Contact() {
                 </span>
               </a>
             ))}
+          </div>
+
+          <div className="contact-quick" role="group" aria-label="Quick copy">
+            <button
+              type="button"
+              className={`contact-quick-btn ${copied === 'email' ? 'is-copied' : ''}`}
+              onClick={() => copyToClipboard('email')}
+              aria-label="Copy email address"
+            >
+              {copied === 'email' ? <FaCheckCircle aria-hidden="true" /> : <FaRegCopy aria-hidden="true" />}
+              {copied === 'email' ? 'Email copied' : 'Copy email'}
+            </button>
+            <button
+              type="button"
+              className={`contact-quick-btn ${copied === 'phone' ? 'is-copied' : ''}`}
+              onClick={() => copyToClipboard('phone')}
+              aria-label="Copy phone number"
+            >
+              {copied === 'phone' ? <FaCheckCircle aria-hidden="true" /> : <FaRegCopy aria-hidden="true" />}
+              {copied === 'phone' ? 'Phone copied' : 'Copy phone'}
+            </button>
           </div>
 
           <div className="contact-follow">

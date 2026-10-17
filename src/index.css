@@ -2337,245 +2337,6 @@ select:focus-visible,
   }
 }
 
-/* ---------- Scroll progress ---------- */
-/* Pinned bottom-right. `.scroll-progress-wrap` positioning is set inline by
-   ScrollProgress.jsx, so this block only handles size and appearance. */
-.scroll-progress-btn {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  background: var(--surface-strong);
-  border: 1px solid var(--border-strong);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  color: var(--text-1);
-  font-size: 1.25rem;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
-  transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
-}
-
-.scroll-progress-btn:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--glow-purple), 0 12px 32px rgba(0, 0, 0, 0.45);
-}
-
-.scroll-progress-svg {
-  position: absolute;
-  inset: 0;
-  width: 58px;
-  height: 58px;
-  transform: rotate(-90deg);
-}
-
-.scroll-progress-svg circle {
-  fill: none;
-  stroke-width: 3;
-}
-
-.scroll-progress-bg {
-  stroke: rgba(255, 255, 255, 0.14);
-}
-
-.scroll-progress-fg {
-  stroke: url(#scrollProgressGradient);
-  stroke-linecap: round;
-  transition: stroke-dashoffset 0.12s linear;
-}
-
-/* Back to top sits bottom-LEFT so it never overlaps ScrollProgress. */
-.back-to-top-wrap {
-  position: fixed;
-  left: 1.6rem;
-  right: auto;
-  bottom: 1.6rem;
-  z-index: 90;
-  display: inline-flex;
-  opacity: 0;
-  transform: translateY(16px) scale(0.82);
-  pointer-events: none;
-  transition: opacity 0.4s var(--ease-out), transform 0.55s var(--ease-spring);
-}
-
-.back-to-top-wrap.is-visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  pointer-events: auto;
-}
-
-.back-to-top {
-  position: relative;
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 54px;
-  height: 54px;
-  padding: 0;
-  border-radius: 17px;
-  color: var(--text-1);
-  background: rgba(10, 10, 26, 0.55);
-  border: 1px solid var(--border-strong);
-  backdrop-filter: blur(16px) saturate(150%);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-  transition: color var(--dur) var(--ease-out), background var(--dur) var(--ease-out),
-    border-color var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out),
-    transform var(--dur) var(--ease-spring);
-}
-
-.back-to-top::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background: var(--accent-grad);
-  opacity: 0.45;
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  padding: 1px;
-  transition: opacity var(--dur) var(--ease-out);
-}
-
-.back-to-top:hover {
-  color: #fff;
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.42), rgba(6, 182, 212, 0.3));
-  border-color: rgba(124, 58, 237, 0.5);
-  box-shadow: 0 0 30px -6px rgba(124, 58, 237, 0.9), 0 14px 34px rgba(0, 0, 0, 0.5);
-  transform: translateY(-3px);
-}
-
-.back-to-top:hover::before {
-  opacity: 1;
-}
-
-.back-to-top:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.5), 0 0 30px -6px rgba(124, 58, 237, 0.9);
-}
-
-.back-to-top:active {
-  transform: translateY(-1px) scale(0.94);
-}
-
-.back-to-top-halo {
-  position: absolute;
-  inset: -4px;
-  z-index: 0;
-  border-radius: 21px;
-  pointer-events: none;
-  opacity: 0;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    var(--purple) 80deg,
-    var(--cyan) 170deg,
-    var(--blue) 240deg,
-    transparent 340deg
-  );
-  filter: blur(9px);
-  transition: opacity 0.4s var(--ease-out);
-  animation: back-to-top-spin 3.2s linear infinite;
-}
-
-.back-to-top-wrap:hover .back-to-top-halo,
-.back-to-top-wrap:focus-within .back-to-top-halo {
-  opacity: 0.75;
-}
-
-@keyframes back-to-top-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.back-to-top-icon {
-  position: relative;
-  z-index: 1;
-  font-size: 1.15rem;
-  transition: transform 0.45s var(--ease-spring);
-}
-
-.back-to-top:hover .back-to-top-icon {
-  transform: translateY(-3px) scale(1.08);
-}
-
-.back-to-top-tip {
-  position: absolute;
-  right: calc(100% + 12px);
-  top: 50%;
-  z-index: 0;
-  padding: 0.42rem 0.72rem;
-  border-radius: 10px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  white-space: nowrap;
-  color: var(--text-1);
-  background: rgba(10, 10, 26, 0.82);
-  border: 1px solid var(--border);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
-  opacity: 0;
-  transform: translateY(-50%) translateX(8px);
-  pointer-events: none;
-  transition: opacity 0.28s var(--ease-out), transform 0.35s var(--ease-spring);
-}
-
-.back-to-top-wrap:hover .back-to-top-tip,
-.back-to-top-wrap:focus-within .back-to-top-tip {
-  opacity: 1;
-  transform: translateY(-50%) translateX(0);
-}
-
-@media (max-width: 480px) {
-  .back-to-top-wrap {
-    left: 1.1rem;
-    right: auto;
-    bottom: 1.1rem;
-  }
-
-  .scroll-progress-btn,
-  .scroll-progress-svg {
-    width: 52px;
-    height: 52px;
-  }
-
-  .back-to-top {
-    width: 46px;
-    height: 46px;
-    border-radius: 14px;
-  }
-
-  .back-to-top-halo {
-    inset: -3px;
-    border-radius: 17px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .back-to-top-wrap,
-  .back-to-top,
-  .back-to-top-icon,
-  .back-to-top-tip,
-  .back-to-top-halo {
-    animation: none;
-    transition: opacity 0.2s linear;
-    transform: none;
-  }
-
-  .back-to-top:hover {
-    transform: none;
-  }
-}
-
 /* ---------- Page loader ---------- */
 .page-loader {
   position: fixed;
@@ -4921,4 +4682,234 @@ main > .section {
    target is exact, then it stays on for the rest of the session. */
 html.cv-off main > .section {
   content-visibility: visible;
+}
+
+/* ============================================================
+   Feature additions: project search, hero status, quick copy
+   ============================================================ */
+
+/* ---------- Project search toolbar ---------- */
+.projects-toolbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  margin-bottom: 1.4rem;
+}
+
+.projects-toolbar .projects-filters {
+  margin-bottom: 0;
+}
+
+.projects-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: min(100%, 460px);
+}
+
+.projects-search-icon {
+  position: absolute;
+  left: 1rem;
+  color: var(--text-3);
+  pointer-events: none;
+}
+
+.projects-search-input {
+  width: 100%;
+  padding: 0.72rem 2.7rem 0.72rem 2.6rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-1);
+  font-size: var(--fs-sm);
+  font-family: inherit;
+  transition:
+    border-color var(--dur) var(--ease-out),
+    background var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
+}
+
+.projects-search-input::placeholder {
+  color: var(--text-3);
+}
+
+.projects-search-input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.projects-search-input:focus {
+  outline: none;
+  border-color: rgba(167, 139, 250, 0.6);
+  background: var(--surface-hover);
+  box-shadow: var(--glow-purple);
+}
+
+.projects-search-clear {
+  position: absolute;
+  right: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all var(--dur) var(--ease-out);
+}
+
+.projects-search-clear:hover {
+  color: #fff;
+  background: rgba(168, 85, 247, 0.45);
+}
+
+.projects-count {
+  text-align: center;
+  color: var(--text-3);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.02em;
+  margin-bottom: 1.6rem;
+}
+
+.projects-count strong {
+  color: var(--text-1);
+}
+
+.projects-empty {
+  text-align: center;
+  color: var(--text-2);
+  padding: 3rem 1rem;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+/* ---------- Contact quick copy ---------- */
+.contact-quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.2rem;
+}
+
+.contact-quick-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.05rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-2);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all var(--dur) var(--ease-out);
+}
+
+.contact-quick-btn:hover {
+  color: #fff;
+  border-color: var(--border-strong);
+  background: var(--surface-hover);
+  transform: translateY(-2px);
+}
+
+.contact-quick-btn.is-copied {
+  color: #9df5cf;
+  border-color: rgba(52, 211, 153, 0.5);
+  background: rgba(52, 211, 153, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-quick-btn:hover {
+    transform: none;
+  }
+}
+
+/* ---------- Back to home ---------- */
+.back-home {
+  position: fixed;
+  right: 1.6rem;
+  bottom: 1.6rem;
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.68rem 1.05rem 0.68rem 0.88rem;
+  border-radius: var(--radius-full);
+  color: var(--text-1);
+  background: rgba(10, 10, 26, 0.62);
+  border: 1px solid var(--border-strong);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
+  font-family: inherit;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(16px) scale(0.9);
+  pointer-events: none;
+  transition:
+    opacity 0.4s var(--ease-out),
+    transform 0.55s var(--ease-spring),
+    color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
+}
+
+.back-home.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.back-home:hover {
+  color: #fff;
+  border-color: rgba(124, 58, 237, 0.5);
+  box-shadow: 0 0 30px -6px rgba(124, 58, 237, 0.9), 0 14px 34px rgba(0, 0, 0, 0.5);
+  transform: translateY(-3px);
+}
+
+.back-home:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.5), 0 14px 34px rgba(0, 0, 0, 0.5);
+}
+
+.back-home:active {
+  transform: translateY(-1px) scale(0.96);
+}
+
+.back-home-icon {
+  font-size: 1rem;
+  transition: transform 0.45s var(--ease-spring);
+}
+
+.back-home:hover .back-home-icon {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 480px) {
+  .back-home {
+    right: 1.1rem;
+    bottom: 1.1rem;
+    padding: 0.62rem 0.95rem 0.62rem 0.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-home {
+    transition: opacity 0.2s linear;
+    transform: none;
+  }
+
+  .back-home:hover,
+  .back-home:active {
+    transform: none;
+  }
 }

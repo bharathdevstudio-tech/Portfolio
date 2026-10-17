@@ -1,10 +1,15 @@
 // Certificates data — edit here to update the Certificates section.
 // pdfUrl points to a local file in /public/certificates (or any hosted link).
 // The preview image is the same PDF rendered to PNG (page 1).
+// Bump PREVIEW_VERSION whenever a preview PNG is regenerated so browsers,
+// which cache by URL, pick up the new image.
+const PREVIEW_VERSION = 1
 
 const withPreview = (cert) => ({
   ...cert,
-  image: cert.pdfUrl ? cert.pdfUrl.replace(/\.pdf$/, '.png') : null,
+  image: cert.pdfUrl
+    ? `${cert.pdfUrl.replace(/\.pdf$/, '.png')}?v=${PREVIEW_VERSION}`
+    : null,
 })
 
 export const certificates = [
@@ -28,11 +33,11 @@ export const certificates = [
   },
   {
     id: 3,
-    title: 'AI & Machine Learning Essentials',
+    title: 'Strategic Planning in the AI Age',
     organization: 'HP LIFE \u2013 HP Foundation',
     date: '2026',
     credentialUrl: '',
-    pdfUrl: '',
-    placeholderPalette: ['#c084fc', '#7c3aed'],
+    pdfUrl: '/certificates/strategic-planning-ai.pdf',
+    placeholderPalette: ['#a855f7', '#06b6d4'],
   },
 ].map(withPreview)
