@@ -1413,6 +1413,17 @@ select:focus-visible,
   backdrop-filter: blur(4px);
   opacity: 0;
   transition: opacity var(--dur) var(--ease-out);
+  /* also used as a <button> now — reset native styles */
+  border: 0;
+  color: #fff;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.cert-card .cert-card-action {
+  margin-top: auto;
+  font-size: var(--fs-xs);
+  padding: 0.6rem 1rem;
 }
 
 .cert-card:hover .cert-preview-overlay {
@@ -4911,5 +4922,156 @@ html.cv-off main > .section {
   .back-home:hover,
   .back-home:active {
     transform: none;
+  }
+}
+
+/* ---------- Certificate viewer (in-page modal) ---------- */
+.cert-viewer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 850;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(4, 4, 12, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: palette-fade 0.16s var(--ease-out);
+}
+
+.cert-viewer {
+  width: min(100%, 900px);
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: rgba(10, 10, 26, 0.97);
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6), var(--glow-purple);
+  animation: palette-pop 0.18s var(--ease-spring);
+}
+
+.cert-viewer-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.cert-viewer-title {
+  font-size: 1.05rem;
+  color: var(--text-1);
+}
+
+.cert-viewer-sub {
+  margin-top: 0.2rem;
+  color: var(--text-3);
+  font-size: var(--fs-xs);
+}
+
+.cert-viewer-close {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-2);
+  font-size: 1rem;
+  cursor: pointer;
+  transition:
+    color var(--dur) var(--ease-out),
+    background var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
+}
+
+.cert-viewer-close:hover {
+  color: #fff;
+  border-color: rgba(124, 58, 237, 0.5);
+  background: rgba(124, 58, 237, 0.18);
+}
+
+.cert-viewer-close:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.5);
+}
+
+.cert-viewer-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 1rem;
+  background: #eef1f8;
+}
+
+.cert-viewer-img {
+  max-width: 100%;
+  max-height: 68vh;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.cert-viewer-frame {
+  width: 100%;
+  height: 68vh;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: #fff;
+}
+
+.cert-viewer-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  color: #6b7280;
+}
+
+.cert-viewer-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.cert-viewer-foot .btn {
+  font-size: var(--fs-xs);
+  padding: 0.6rem 1rem;
+}
+
+@media (max-width: 560px) {
+  .cert-viewer-overlay {
+    padding: 0.8rem;
+  }
+
+  .cert-viewer-body {
+    padding: 0.6rem;
+  }
+
+  .cert-viewer-img {
+    max-height: 56vh;
+  }
+
+  .cert-viewer-frame {
+    height: 56vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cert-viewer-overlay,
+  .cert-viewer {
+    animation: none;
   }
 }

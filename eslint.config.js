@@ -38,4 +38,10 @@ export default [
     files: ['src/components/three/**/*.jsx'],
     rules: { 'react/no-unknown-property': 'off' },
   },
+  {
+    // Node-side files: the serverless contact function and the Vite config.
+    files: ['api/**/*.js', 'vite.config.js'],
+    languageOptions: { globals: { ...globals.node } },
+    rules: { 'react-refresh/only-export-components': 'off' },
+  },
 ]

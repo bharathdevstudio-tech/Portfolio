@@ -1,12 +1,16 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { FaAward, FaBuilding, FaEye } from 'react-icons/fa6'
 import { FaCalendarAlt, FaExternalLinkAlt } from 'react-icons/fa'
 import Reveal from './Reveal'
 import Section from './Section'
+import CertificateViewer from './CertificateViewer'
 import { certificates } from '../data/certificates'
 
 export default function Certificates() {
   const [failedImages, setFailedImages] = useState({})
+  const [activeCert, setActiveCert] = useState(null)
+
+  const closeViewer = useCallback(() => setActiveCert(null), [])
 
   return (
     <Section
@@ -22,7 +26,9 @@ export default function Certificates() {
       <div className="certs-grid">
         {certificates.map((cert, i) => {
           const showImage = Boolean(cert.image) && !failedImages[cert.id]
-          const link = cert.pdfUrl || cert.credentialUrl
+          // Certificates with a PDF/image are shown in-page; only pure external
+          // credentials fall back to a verification link.
+          const canView = Boolean(cert.pdfUrl || cert.image)
 
           return (
             <Reveal key={cert.id} delay={(i % 3) * 90} className="cert-card card glass">
@@ -42,16 +48,26 @@ export default function Certificates() {
                   <FaAward size="3rem" aria-hidden="true" />
                 )}
 
-                {link ? (
-                  <a
-                    href={link}
+                {canView ? (
+                  <button
+                    type="button"
                     className="cert-preview-overlay"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Open certificate: ${cert.title}`}
+                    onClick={() => setActiveCert(cert)}
+                    aria-label={`View certificate: ${cert.title}`}
                   >
                     <FaEye size="1.1em" aria-hidden="true" />
                     View Certificate
+                  </button>
+                ) : cert.credentialUrl ? (
+                  <a
+                    href={cert.credentialUrl}
+                    className="cert-preview-overlay"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Open credential: ${cert.title}`}
+                  >
+                    <FaEye size="1.1em" aria-hidden="true" />
+                    Verify Credential
                   </a>
                 ) : null}
               </div>
@@ -68,15 +84,23 @@ export default function Certificates() {
                 </p>
               </div>
 
-              {link ? (
+              {canView ? (
+                <button
+                  type="button"
+                  className="btn btn-secondary cert-card-action"
+                  onClick={() => setActiveCert(cert)}
+                >
+                  View Certificate
+                  <FaEye size="0.8em" aria-hidden="true" />
+                </button>
+              ) : cert.credentialUrl ? (
                 <a
-                  href={cert.credentialUrl || cert.pdfUrl}
-                  className="btn btn-secondary"
+                  href={cert.credentialUrl}
+                  className="btn btn-secondary cert-card-action"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ marginTop: 'auto', fontSize: 'var(--fs-xs)', padding: '0.6rem 1rem' }}
                 >
-                  {cert.credentialUrl ? 'Verify Credential' : 'View Certificate'}
+                  Verify Credential
                   <FaExternalLinkAlt size="0.75em" aria-hidden="true" />
                 </a>
               ) : (
@@ -88,6 +112,8 @@ export default function Certificates() {
           )
         })}
       </div>
+
+      <CertificateViewer cert={activeCert} onClose={closeViewer} />
     </Section>
   )
 }

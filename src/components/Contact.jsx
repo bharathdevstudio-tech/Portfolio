@@ -381,8 +381,8 @@ function Contact() {
 
             {!isContactConfigured() && (
               <p className="form-note">
-                Not connected yet \u2014 add EmailJS env vars (VITE_EMAILJS_SERVICE_ID / _TEMPLATE_ID /
-                _PUBLIC_KEY) to .env or your Vercel project. See .env.example.
+                Not connected yet — add your SMTP or EmailJS keys to .env (see .env.example)
+                or your hosting provider&rsquo;s environment variables.
               </p>
             )}
 
