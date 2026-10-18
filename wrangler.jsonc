@@ -1,0 +1,17 @@
+{
+  // Cloudflare Workers deployment for this Vite single-page app.
+  //
+  // `npm run build` writes the site to ./dist; wrangler uploads that folder as
+  // static assets and serves it with an SPA fallback (unknown paths return
+  // index.html so client-side routing works).
+  //
+  // An explicit config also stops `wrangler deploy` from running autoconfig,
+  // which otherwise tries to parse and rewrite vite.config.js.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "bharath-portfolio",
+  "compatibility_date": "2026-10-18",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}

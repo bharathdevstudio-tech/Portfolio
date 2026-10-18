@@ -37,11 +37,11 @@ async function sendViaFormspree(endpoint, payload) {
   return SUCCESS
 }
 
-// Our own /api/contact route. On Vercel this is SMTP via Nodemailer; on
-// Cloudflare it is a Pages Function that relays or answers with JSON. We require
-// a JSON { ok: true } reply so a platform's static HTML fallback page (e.g. an
-// SPA catch-all returning index.html with 200) can never be mistaken for a
-// successful send.
+// Our own /api/contact route (SMTP via Nodemailer on Vercel). We require a JSON
+// { ok: true } reply so a host's static HTML fallback page — for example
+// Cloudflare's SPA catch-all returning index.html with a 200 — can never be
+// mistaken for a successful send. On hosts without the route the request fails
+// here and EmailJS takes over.
 async function sendViaBackend(endpoint, payload) {
   const res = await fetch(endpoint, {
     method: 'POST',

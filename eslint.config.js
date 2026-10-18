@@ -44,10 +44,4 @@ export default [
     languageOptions: { globals: { ...globals.node } },
     rules: { 'react-refresh/only-export-components': 'off' },
   },
-  {
-    // Cloudflare Pages Functions (Workers runtime): browser-like web APIs.
-    files: ['functions/**/*.js'],
-    languageOptions: { globals: { ...globals.browser, ...globals.es2021 } },
-    rules: { 'react-refresh/only-export-components': 'off' },
-  },
 ]
