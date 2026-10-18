@@ -42,6 +42,17 @@ export default function Education() {
                 </div>
               </div>
 
+              {item.image && (
+                <figure className="career-card-media">
+                  <img
+                    src={item.image}
+                    alt={item.imageAlt || item.institution}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
+              )}
+
               {item.desc && <p className="career-card-desc">{item.desc}</p>}
 
               {item.skills?.length > 0 && (

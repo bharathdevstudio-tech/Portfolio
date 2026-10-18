@@ -1,12 +1,11 @@
 // Trailing cursor ring for fine-pointer devices. The native cursor stays
 // visible and operable; this is purely decorative (aria-hidden), disabled for
 // touch and users who prefer reduced motion.
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 export default function CustomCursor() {
   const reduced = useReducedMotion()
-  const [active, setActive] = useState(false)
   const dotRef = useRef(null)
   const ringRef = useRef(null)
 
@@ -15,8 +14,9 @@ export default function CustomCursor() {
 
     const media = window.matchMedia('(pointer: fine)')
     if (!media.matches) return undefined
-    setActive(true)
 
+    // The dot/ring are always rendered so their refs exist on mount; visibility
+    // is gated by the `has-custom-cursor` class on <html>.
     const dot = dotRef.current
     const ring = ringRef.current
     if (!dot || !ring) return undefined
@@ -36,8 +36,10 @@ export default function CustomCursor() {
     const loop = () => {
       rx = lerp(rx, mx, 0.16)
       ry = lerp(ry, my, 0.16)
-      dot.style.transform = `translate(${mx - 3}px, ${my - 3}px)`
-      ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`
+      dot.style.setProperty('--cursor-x', `${mx}px`)
+      dot.style.setProperty('--cursor-y', `${my}px`)
+      ring.style.setProperty('--cursor-x', `${rx}px`)
+      ring.style.setProperty('--cursor-y', `${ry}px`)
       const settled = Math.abs(rx - mx) < 0.15 && Math.abs(ry - my) < 0.15
       raf = settled ? null : requestAnimationFrame(loop)
     }
@@ -64,8 +66,6 @@ export default function CustomCursor() {
       document.documentElement.classList.remove('has-custom-cursor')
     }
   }, [reduced])
-
-  if (!active) return null
 
   return (
     <>

@@ -14,9 +14,6 @@ import {
   FaXTwitter,
   FaLock,
   FaArrowRight,
-  FaBriefcase,
-  FaHandshake,
-  FaBuilding,
   FaUser,
   FaAt,
   FaTag,
@@ -38,12 +35,6 @@ const FIELD_META = [
   { name: 'email', label: 'Your Email', icon: <FaAt />, type: 'email', placeholder: 'you@example.com', autoComplete: 'email' },
   { name: 'phone', label: 'Your Phone', icon: <FaPhone />, type: 'tel', placeholder: '+91 00000 00000', autoComplete: 'tel', optional: true },
   { name: 'subject', label: 'Subject', icon: <FaTag />, type: 'text', placeholder: 'What is this about?', optional: true },
-]
-
-const HIGHLIGHTS = [
-  { icon: <FaBriefcase />, title: 'Freelance Projects', text: 'Web, Mobile & Desktop Apps' },
-  { icon: <FaHandshake />, title: 'Collaboration', text: 'Open for remote work' },
-  { icon: <FaBuilding />, title: 'Business Enquiries', text: 'Let\u2019s create something great' },
 ]
 
 function Contact() {
@@ -180,7 +171,6 @@ function Contact() {
         <span className="contact-dot contact-dot-2" />
         <span className="contact-dot contact-dot-3" />
         <span className="contact-shape contact-shape-1" />
-        <span className="contact-shape contact-shape-2" />
         <FaPaperPlane className="contact-plane" />
       </div>
 
@@ -217,7 +207,6 @@ function Contact() {
                 <span className="contact-card-icon" aria-hidden="true">{item.icon}</span>
 
                 <span className="contact-card-body">
-                  <span className="contact-card-title">{item.title}</span>
                   <span className="contact-card-desc">{item.description}</span>
                 </span>
 
@@ -386,17 +375,6 @@ function Contact() {
               </p>
             )}
 
-            <div className="contact-highlights">
-              {HIGHLIGHTS.map((item) => (
-                <div className="contact-highlight" key={item.title}>
-                  <span className="contact-highlight-icon" aria-hidden="true">{item.icon}</span>
-                  <span>
-                    <span className="contact-highlight-title">{item.title}</span>
-                    <span className="contact-highlight-text">{item.text}</span>
-                  </span>
-                </div>
-              ))}
-            </div>
           </form>
         </Reveal>
       </div>

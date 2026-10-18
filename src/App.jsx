@@ -14,6 +14,7 @@ import Backdrop from './components/Fx/Backdrop'
 import Scanlines from './components/Fx/Scanlines'
 import Spotlight from './components/Fx/Spotlight'
 import CommandPalette from './components/Fx/CommandPalette'
+import CustomCursor from './components/Fx/CustomCursor'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -51,6 +52,7 @@ function App() {
       <Scanlines />
 
       <CommandPalette />
+      <CustomCursor />
 
       <div className="site" style={{ position: 'relative', zIndex: 1 }}>
         <Navbar />
