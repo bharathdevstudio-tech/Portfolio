@@ -8,15 +8,18 @@
   // An explicit config also stops `wrangler deploy` from running autoconfig,
   // which otherwise tries to parse and rewrite vite.config.js.
   //
-  // `not_found_handling` is "404-page" rather than "single-page-application":
-  // this app has no client-side router, so an SPA fallback would serve index.html
-  // (HTTP 200) for every unknown path and create soft 404s in search results.
-  // Unknown paths now return a real 404 with a branded public/404.html.
+  // NOTE: `not_found_handling` must stay "single-page-application" here.
+  // "404-page" was tried (2026-10-19) and it broke the live deployment — every
+  // path including "/" returned a plain-text 404 with no assets served. This app
+  // has no client-side router, so the SPA fallback only means unknown paths
+  // return index.html (HTTP 200); the canonical host is the only URL published
+  // in sitemap.xml, so that is not a practical soft-404 problem in practice.
+  // public/404.html is kept for reference but is NOT wired up, on purpose.
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "bharath-portfolio",
   "compatibility_date": "2026-10-18",
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "404-page"
+    "not_found_handling": "single-page-application"
   }
 }
