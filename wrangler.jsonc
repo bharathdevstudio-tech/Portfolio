@@ -16,7 +16,11 @@
   // in sitemap.xml, so that is not a practical soft-404 problem in practice.
   // public/404.html is kept for reference but is NOT wired up, on purpose.
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "bharath-portfolio",
+  // MUST match the Cloudflare Worker/Workers & Pages project that is bound to
+  // https://portfolio.bharath-devstudio.workers.dev/. It was "bharath-portfolio",
+  // so every deploy published to bharath-portfolio.bharath-devstudio.workers.dev
+  // and left the "portfolio" project empty ("There is nothing here yet").
+  "name": "portfolio",
   "compatibility_date": "2026-10-18",
   "assets": {
     "directory": "./dist",
