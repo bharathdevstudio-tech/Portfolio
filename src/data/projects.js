@@ -11,7 +11,7 @@ export const projects = [
     id: 1,
     title: 'Blood Donation Portal',
     description:
-      'A full-stack blood donation platform — React + Vite frontend with a Node.js API. Connect donors and seekers with a clean, responsive workflow.',
+      'A full-stack blood donation platform connecting donors and seekers. A responsive React front end talks to a Node.js REST API, keeping the donor-to-seeker workflow fast and clear on any device.',
     tags: ['React', 'Node.js', 'Vite', 'Full-Stack'],
     liveUrl: 'https://blood-donetion.vercel.app',
     githubUrl: 'https://github.com/bharathdevstudio-tech/Blood-Donetion',
@@ -22,7 +22,7 @@ export const projects = [
     id: 2,
     title: 'ECom-react',
     description:
-      'An e-commerce storefront built with React Router + TypeScript — product listing, cart flow and a type-safe component architecture.',
+      'An e-commerce storefront built with React Router and TypeScript — product listing, cart flow and a type-safe JavaScript component architecture that stays predictable as it grows.',
     tags: ['React', 'TypeScript', 'React Router', 'Vite'],
     liveUrl: 'https://e-com-react-vbf5.vercel.app',
     githubUrl: 'https://github.com/bharathdevstudio-tech/ECom-react',
@@ -33,7 +33,7 @@ export const projects = [
     id: 3,
     title: 'Fitness',
     description:
-      'A fitness hub in vanilla HTML, CSS and JavaScript — tracking workouts and progress without a single framework dependency.',
+      'A fitness hub built with vanilla JavaScript, HTML and CSS — workout and progress tracking with no framework dependency, keeping the page light and quick to load.',
     tags: ['HTML', 'CSS', 'JavaScript', 'Vanilla JS'],
     liveUrl: 'https://fitness-gold-two.vercel.app',
     githubUrl: 'https://github.com/bharathdevstudio-tech/fitness',

@@ -1,7 +1,7 @@
 {
-  "name": "Bharath E — Full-Stack Developer",
-  "short_name": "Bharath E",
-  "description": "Portfolio of Bharath E, Full-Stack Developer building premium web experiences with React, Node.js and an AI edge.",
+  "name": "bharath-portfolio",
+  "short_name": "Bharath DevStudio",
+  "description": "Portfolio of Bharath E — software developer working in VB.NET, SQL Server, React, JavaScript, REST APIs and AI development.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

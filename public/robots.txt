@@ -2,8 +2,8 @@
 User-agent: *
 Allow: /
 
-# The site is a single-page app; let crawlers see it in full.
+# The site is a single-page app; crawlers should render it in full.
 User-agent: GPTBot
 Allow: /
 
-Sitemap: https://portfolio-m-9f73.vercel.app/sitemap.xml
+Sitemap: https://portfolio.bharath-devstudio.workers.dev/sitemap.xml
