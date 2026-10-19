@@ -15,7 +15,6 @@ export default function Experience() {
       <div className="career-bg" aria-hidden="true">
         <span className="career-glow career-glow-1" />
         <span className="career-glow career-glow-2" />
-        <span className="career-grid-lines" />
       </div>
 
       <div className="container career-layout">

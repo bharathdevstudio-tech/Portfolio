@@ -13,7 +13,6 @@ export default function Education() {
       <div className="education-bg" aria-hidden="true">
         <span className="career-glow career-glow-1" />
         <span className="career-glow career-glow-2" />
-        <span className="career-grid-lines" />
       </div>
 
       <div className="container education-layout">

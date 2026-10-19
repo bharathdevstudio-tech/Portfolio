@@ -166,7 +166,6 @@ function Contact() {
         <span className="contact-blob contact-blob-1" />
         <span className="contact-blob contact-blob-2" />
         <span className="contact-blob contact-blob-3" />
-        <span className="contact-grid-lines" />
         <span className="contact-dot contact-dot-1" />
         <span className="contact-dot contact-dot-2" />
         <span className="contact-dot contact-dot-3" />

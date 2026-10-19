@@ -1517,16 +1517,8 @@ select:focus-visible,
   }
 }
 
-.contact-grid-lines {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, #000 25%, transparent 80%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, #000 25%, transparent 80%);
-}
+/* `.contact-grid-lines` — the 64px grid/box overlay — was removed on request
+   (2026-10-19). Blobs, dots, glow and shapes in `.contact-bg` are unchanged. */
 
 .contact-dot {
   position: absolute;
@@ -2760,23 +2752,8 @@ html.is-tab-hidden *::after {
   overflow: hidden;
 }
 
-.about-section::before {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  top: 8%;
-  left: 50%;
-  width: min(1120px, 100%);
-  height: min(780px, 78%);
-  transform: translateX(-50%);
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(0, 217, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 217, 255, 0.045) 1px, transparent 1px);
-  background-size: 52px 52px;
-  mask-image: radial-gradient(ellipse 70% 68% at 50% 50%, #000 15%, transparent 76%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 68% at 50% 50%, #000 15%, transparent 76%);
-}
+/* NOTE: `.about-section::before` — the 52px cyan grid/box overlay — was removed
+   on request (2026-10-19). The ::after ambient glow below must stay. */
 
 .about-section::after {
   content: '';
@@ -4083,16 +4060,8 @@ html.is-tab-hidden *::after {
   }
 }
 
-.career-grid-lines {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(148, 163, 184, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.07) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse at center, #000 35%, transparent 78%);
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 35%, transparent 78%);
-}
+/* `.career-grid-lines` — the 56px grid/box overlay — was removed on request
+   (2026-10-19). `.career-glow` spans and all timeline layout are unchanged. */
 
 .career-layout {
   position: relative;
